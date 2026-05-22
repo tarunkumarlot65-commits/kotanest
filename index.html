@@ -1,390 +1,1618 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KotaNest — Kota mein akele mat lado</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>KotaNest — Kota Students ka Apna Ghar</title>
+<meta name="description" content="Kota students ke liye — PG finder, mental health, tiffin, parents dashboard, safety sab free mein."/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --orange:#FF6B2B;
-  --orange-light:#FF8C55;
-  --dark:#0D0D0D;
-  --dark2:#141414;
-  --dark3:#1C1C1C;
-  --card:#1E1E1E;
-  --border:#2A2A2A;
-  --text:#F0EDE6;
-  --muted:#888;
-  --green:#2ECC71;
-  --blue:#3B82F6;
-  --pink:#E879A0;
+  --or:#D85A30;--ord:#993C1D;--orl:rgba(216,90,48,0.1);
+  --teal:#1D9E75;--blue:#185FA5;--pink:#D4537E;--amber:#BA7517;
+  --bg:#0D0D0B;--bg2:#161614;--bg3:#1E1E1B;
+  --card:#181816;--border:rgba(255,255,255,0.08);
+  --text:#F5F4F0;--muted:#888780;
+  --green:#16A34A;--red:#DC2626;
+  --app-bg:#FFFBF7;--app-card:#fff;--app-text:#2D1500;--app-muted:#7A5C44;--app-bd:rgba(255,107,0,0.15);
 }
 html{scroll-behavior:smooth}
-body{background:var(--dark);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
+
+/* ======= LANDING ======= */
+#landing{display:block}
+#appShell{display:none}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 5%;display:flex;align-items:center;justify-content:space-between;background:rgba(13,13,13,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:var(--text)}
-.logo span{color:var(--orange)}
-.nav-cta{background:var(--orange);color:#fff;padding:9px 22px;border-radius:100px;font-size:14px;font-weight:500;text-decoration:none;transition:opacity 0.2s}
-.nav-cta:hover{opacity:0.85}
+.l-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;height:64px;background:rgba(13,13,11,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.l-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text);text-decoration:none}
+.l-logo span{color:var(--or)}
+.l-nav-links{display:flex;gap:24px}
+.l-nav-links a{font-size:14px;color:var(--muted);text-decoration:none;transition:color .2s}
+.l-nav-links a:hover{color:var(--text)}
+.l-nav-cta{background:var(--or);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;padding:10px 22px;border-radius:8px;border:none;cursor:pointer;transition:background .2s}
+.l-nav-cta:hover{background:var(--ord)}
 
 /* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:100px 5% 60px;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,107,43,0.12) 0%, transparent 70%)}
-.hero-tag{display:inline-block;background:rgba(255,107,43,0.15);border:1px solid rgba(255,107,43,0.3);color:var(--orange);padding:6px 18px;border-radius:100px;font-size:13px;font-weight:500;margin-bottom:28px}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(42px,7vw,82px);font-weight:800;line-height:1.08;margin-bottom:24px;letter-spacing:-1px}
-.hero h1 .accent{color:var(--orange)}
-.hero-sub{font-size:clamp(16px,2.5vw,20px);color:var(--muted);max-width:580px;margin:0 auto 42px;line-height:1.7;font-weight:300}
-.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.btn-primary{background:var(--orange);color:#fff;padding:14px 32px;border-radius:100px;font-size:16px;font-weight:500;text-decoration:none;transition:transform 0.2s,opacity 0.2s}
-.btn-primary:hover{transform:scale(1.04);opacity:0.9}
-.btn-secondary{background:transparent;color:var(--text);padding:14px 32px;border-radius:100px;font-size:16px;font-weight:500;text-decoration:none;border:1px solid var(--border);transition:border-color 0.2s}
-.btn-secondary:hover{border-color:var(--orange)}
-.hero-stats{display:flex;gap:40px;justify-content:center;margin-top:64px;flex-wrap:wrap}
-.stat{text-align:center}
-.stat-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--orange)}
-.stat-label{font-size:13px;color:var(--muted);margin-top:4px}
+.l-hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 5vw 80px;text-align:center;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(216,90,48,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(216,90,48,0.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(216,90,48,0.12) 0%,transparent 70%);pointer-events:none}
+.hero-inner{position:relative;z-index:1;max-width:820px}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:6px 16px;font-size:13px;color:var(--muted);margin-bottom:28px;animation:fadeUp .6s ease both}
+.hero-dot{width:7px;height:7px;border-radius:50%;background:var(--or);animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.l-hero h1{font-size:clamp(38px,7vw,76px);font-weight:800;line-height:1.08;letter-spacing:-.03em;margin-bottom:24px;animation:fadeUp .6s .1s ease both}
+.accent{color:var(--or)}.accent2{color:var(--teal)}
+.hero-sub{font-size:clamp(15px,2vw,19px);color:var(--muted);max-width:560px;margin:0 auto 40px;animation:fadeUp .6s .2s ease both}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .6s .3s ease both}
+.btn-primary{background:var(--or);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:16px;padding:14px 32px;border-radius:10px;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-primary:hover{background:var(--ord);transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:var(--text);font-family:'Syne',sans-serif;font-weight:600;font-size:16px;padding:14px 32px;border-radius:10px;border:1px solid var(--border);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-secondary:hover{border-color:rgba(255,255,255,.25);transform:translateY(-2px)}
+.hero-stats{display:flex;gap:48px;justify-content:center;margin-top:64px;padding-top:40px;border-top:1px solid var(--border);animation:fadeUp .6s .4s ease both;flex-wrap:wrap}
+.hstat-val{font-family:'Syne',sans-serif;font-size:36px;font-weight:800}
+.hstat-lbl{font-size:13px;color:var(--muted);margin-top:2px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-/* PROBLEMS */
-.section{padding:100px 5%}
-.section-tag{display:inline-block;background:rgba(255,107,43,0.12);color:var(--orange);padding:5px 14px;border-radius:100px;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px}
-.section-title{font-family:'Syne',sans-serif;font-size:clamp(32px,5vw,52px);font-weight:800;line-height:1.1;margin-bottom:16px}
-.section-sub{color:var(--muted);font-size:17px;font-weight:300;max-width:500px;line-height:1.7}
-.problems-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:52px}
-.problem-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:border-color 0.3s}
-.problem-card:hover{border-color:rgba(255,107,43,0.4)}
-.p-icon{font-size:32px;margin-bottom:14px}
-.p-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px}
-.p-desc{color:var(--muted);font-size:14px;line-height:1.7}
+/* SECTIONS */
+.l-sec{padding:80px 5vw}
+.l-sec.dark{background:var(--bg2)}
+.sec-tag{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--or);background:rgba(216,90,48,.1);border:1px solid rgba(216,90,48,.2);padding:5px 14px;border-radius:20px;margin-bottom:16px}
+.sec-title{font-size:clamp(26px,4vw,44px);font-weight:800;line-height:1.15;margin-bottom:16px}
+.sec-sub{font-size:17px;color:var(--muted);max-width:560px;line-height:1.7;margin-bottom:48px}
 
-/* FEATURES */
-.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:52px}
-.feature-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;transition:all 0.3s;position:relative;overflow:hidden}
-.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--orange),var(--orange-light));opacity:0;transition:opacity 0.3s}
-.feature-card:hover{border-color:rgba(255,107,43,0.3);transform:translateY(-3px)}
-.feature-card:hover::before{opacity:1}
-.f-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px}
-.f-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px}
-.f-desc{color:var(--muted);font-size:14px;line-height:1.7}
-.f-badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600;margin-top:14px}
-.badge-new{background:rgba(46,204,113,0.15);color:var(--green);border:1px solid rgba(46,204,113,0.3)}
-.badge-hot{background:rgba(255,107,43,0.15);color:var(--orange);border:1px solid rgba(255,107,43,0.3)}
-.badge-safe{background:rgba(232,121,160,0.15);color:var(--pink);border:1px solid rgba(232,121,160,0.3)}
+/* PROBLEM CARDS */
+.prob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.prob-card{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:24px;transition:border-color .2s}
+.prob-card:hover{border-color:rgba(216,90,48,.3)}
+.prob-icon{font-size:28px;margin-bottom:12px}
+.prob-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px}
+.prob-desc{font-size:14px;color:var(--muted);line-height:1.6}
 
-/* GIRLS SECTION */
-.girls-section{background:linear-gradient(135deg,rgba(232,121,160,0.08),rgba(255,107,43,0.08));border:1px solid rgba(232,121,160,0.2);border-radius:24px;padding:60px 5%;margin:0 5%;text-align:center}
-.girls-title{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:800;margin-bottom:16px}
-.girls-title .pink{color:var(--pink)}
-
-/* REFERRAL */
-.referral-section{padding:100px 5%;text-align:center}
-.slider-wrap{max-width:500px;margin:40px auto 0}
-.slider-label{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:10px}
-input[type=range]{width:100%;accent-color:var(--orange);height:6px;cursor:pointer}
-.earning-display{font-family:'Syne',sans-serif;font-size:56px;font-weight:800;color:var(--orange);margin-top:24px}
-.earning-sub{color:var(--muted);font-size:15px;margin-top:6px}
+/* FEATURE CARDS */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.feat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .2s;position:relative;overflow:hidden}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .2s}
+.feat-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.12)}
+.feat-card:hover::before{opacity:1}
+.feat-card.c-or::before{background:var(--or)}
+.feat-card.c-teal::before{background:var(--teal)}
+.feat-card.c-blue::before{background:var(--blue)}
+.feat-card.c-pink::before{background:var(--pink)}
+.feat-card.c-amber::before{background:var(--amber)}
+.feat-icon-wrap{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px}
+.fi-or{background:rgba(216,90,48,.15)}
+.fi-teal{background:rgba(29,158,117,.15)}
+.fi-blue{background:rgba(24,95,165,.15)}
+.fi-pink{background:rgba(212,83,126,.15)}
+.fi-amber{background:rgba(186,117,23,.15)}
+.feat-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;margin-bottom:8px}
+.feat-desc{font-size:14px;color:var(--muted);line-height:1.6}
 
 /* PRICING */
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-top:52px;max-width:900px;margin-left:auto;margin-right:auto}
-.price-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;transition:all 0.3s}
-.price-card.featured{border-color:var(--orange);background:linear-gradient(135deg,rgba(255,107,43,0.08),var(--card))}
-.price-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:48px}
+.price-card{background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:32px;position:relative}
+.price-card.featured{border-color:var(--or)}
+.featured-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--or);color:#fff;font-size:11px;font-weight:700;padding:3px 14px;border-radius:20px;white-space:nowrap}
+.price-name{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--muted)}
 .price-amount{font-family:'Syne',sans-serif;font-size:48px;font-weight:800;line-height:1}
-.price-amount span{font-size:20px;font-weight:400;color:var(--muted)}
-.price-period{color:var(--muted);font-size:14px;margin-top:4px}
-.price-features{list-style:none;margin:24px 0;display:grid;gap:10px}
-.price-features li{font-size:14px;color:var(--muted);display:flex;align-items:center;gap:8px}
-.price-features li::before{content:'✓';color:var(--orange);font-weight:700;flex-shrink:0}
-.price-btn{display:block;text-align:center;padding:13px;border-radius:100px;font-size:15px;font-weight:500;text-decoration:none;transition:all 0.2s;margin-top:8px}
-.price-btn-outline{border:1px solid var(--border);color:var(--text)}
-.price-btn-outline:hover{border-color:var(--orange);color:var(--orange)}
-.price-btn-filled{background:var(--orange);color:#fff}
-.price-btn-filled:hover{opacity:0.88}
+.price-period{font-size:13px;color:var(--muted);margin-bottom:24px;margin-top:4px}
+.price-features{list-style:none;margin-bottom:28px}
+.price-features li{font-size:14px;color:var(--muted);padding:6px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.price-features li::before{content:'✓';color:var(--or);font-weight:700;font-size:12px}
+.price-btn{display:block;text-align:center;padding:12px;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:15px;text-decoration:none;cursor:pointer;border:none;transition:all .2s}
+.price-btn.solid{background:var(--or);color:#fff}
+.price-btn.solid:hover{background:var(--ord)}
+.price-btn.outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.price-btn.outline:hover{border-color:rgba(255,255,255,.25)}
 
 /* TESTIMONIALS */
-.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:52px}
-.testi-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px}
-.testi-text{font-size:15px;line-height:1.7;color:var(--text);margin-bottom:18px;font-style:italic}
-.testi-text::before{content:'"';font-family:'Syne',sans-serif;font-size:40px;color:var(--orange);line-height:0;vertical-align:-16px;margin-right:4px}
-.testi-author{display:flex;align-items:center;gap:10px}
-.avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
-.author-name{font-weight:500;font-size:14px}
-.author-info{font-size:12px;color:var(--muted)}
+.test-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:48px}
+.test-card{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:24px}
+.test-stars{color:var(--or);font-size:16px;margin-bottom:12px;letter-spacing:2px}
+.test-quote{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:20px;font-style:italic}
+.test-author{display:flex;align-items:center;gap:12px}
+.test-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:14px}
+.test-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700}
+.test-meta{font-size:12px;color:var(--muted);margin-top:2px}
 
 /* FINAL CTA */
-.cta-section{padding:120px 5%;text-align:center;position:relative;overflow:hidden}
-.cta-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(255,107,43,0.1),transparent)}
-.cta-title{font-family:'Syne',sans-serif;font-size:clamp(36px,6vw,70px);font-weight:800;line-height:1.1;margin-bottom:20px}
-.cta-sub{color:var(--muted);font-size:18px;font-weight:300;margin-bottom:40px}
+.final-cta{padding:100px 5vw;text-align:center;position:relative;overflow:hidden}
+.final-cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(216,90,48,.15) 0%,transparent 70%);pointer-events:none}
+.final-cta h2{font-size:clamp(32px,5vw,56px);font-weight:800;line-height:1.15;margin-bottom:16px;position:relative}
+.final-cta p{font-size:17px;color:var(--muted);margin-bottom:40px;position:relative}
 
 /* FOOTER */
-footer{background:var(--dark2);border-top:1px solid var(--border);padding:40px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:gap;gap:16px}
-.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px}
-.footer-logo span{color:var(--orange)}
-.footer-copy{color:var(--muted);font-size:13px}
+footer{background:var(--bg2);padding:40px 5vw;display:flex;align-items:center;justify-content:space-between;flex-wrap:gap;gap:20px;border-top:1px solid var(--border)}
+.footer-brand{font-family:'Syne',sans-serif;font-size:20px;font-weight:800}
+.footer-brand span{color:var(--or)}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap}
+.footer-links a{font-size:13px;color:var(--muted);text-decoration:none;cursor:pointer}
+.footer-links a:hover{color:var(--text)}
+.footer-text{font-size:12px;color:var(--muted)}
 
-/* DIVIDER */
-.divider{border:none;border-top:1px solid var(--border);margin:0}
+/* ======= APP SHELL ======= */
+#appShell{background:var(--app-bg);color:var(--app-text);min-height:100vh}
+.app-nav{background:#1A0A00;display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.1rem;position:sticky;top:0;z-index:50}
+.app-logo{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--or)}
+.app-logo span{color:#fff}
+.app-nav-user{display:flex;align-items:center;gap:8px}
+.app-nav-name{font-size:11px;color:rgba(255,255,255,.4)}
+.app-avatar{width:30px;height:30px;border-radius:50%;background:var(--or);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
 
-@media(max-width:600px){
-  .hero-stats{gap:24px}
-  .hero-btns{flex-direction:column;align-items:center}
-  footer{flex-direction:column;text-align:center}
-}
+.apage{display:none;padding-bottom:70px;min-height:80vh}
+.apage.active{display:block}
+
+/* APP HERO */
+.app-hero{background:#1A0A00;padding:1.5rem 1.2rem 2rem;position:relative;overflow:hidden}
+.app-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(216,90,48,.2),transparent 70%);pointer-events:none}
+.app-hero-ey{font-size:11px;color:rgba(255,255,255,.45);margin-bottom:.5rem}
+.app-hero h1{font-size:2rem;font-weight:800;color:#fff;line-height:1.1;margin-bottom:.4rem}
+.app-hero h1 em{color:var(--or);font-style:normal}
+.app-hero p{font-size:.875rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:1.2rem}
+.hero-sts{display:flex;gap:1.5rem;margin-bottom:1.2rem}
+.hs-n{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#fff}
+.hs-l{font-size:10px;color:rgba(255,255,255,.4);margin-top:1px}
+.qbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.qb{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:.75rem;cursor:pointer;text-align:left;color:#fff;font-family:'DM Sans',sans-serif;transition:all .2s}
+.qb:hover{background:rgba(216,90,48,.15);border-color:rgba(216,90,48,.4)}
+.qb-icon{font-size:20px;margin-bottom:4px;display:block}
+.qb-title{font-size:13px;font-weight:500}
+.qb-sub{font-size:10px;color:rgba(255,255,255,.4);margin-top:1px}
+
+/* APP SECTIONS */
+.asec{padding:1rem 1.1rem}
+.asec-head{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:800;margin-bottom:.75rem;display:flex;justify-content:space-between;align-items:center;color:var(--app-text)}
+.asec-head a{font-size:11px;color:var(--or);cursor:pointer;font-weight:400}
+.acard{background:var(--app-card);border:1px solid var(--app-bd);border-radius:14px;padding:1rem;margin-bottom:8px}
+.abadge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500}
+.ab-green{background:rgba(22,163,74,.1);color:var(--green)}
+.ab-or{background:var(--orl);color:var(--or)}
+.ab-blue{background:rgba(24,95,165,.1);color:var(--blue)}
+.ab-red{background:rgba(220,38,38,.1);color:var(--red)}
+
+/* MOOD */
+.mood-btns{display:flex;gap:6px;margin-top:.5rem}
+.mood-btns button{flex:1;padding:7px;border:1px solid var(--app-bd);border-radius:8px;background:none;cursor:pointer;font-size:13px;font-family:'DM Sans',sans-serif;transition:all .2s;color:var(--app-text)}
+.mood-btns button:hover{background:var(--orl);border-color:var(--or)}
+.notice-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;font-size:12px;color:var(--app-muted)}
+
+/* CHAT */
+.chat-hdr{background:#1A0A00;padding:.9rem 1.1rem;display:flex;align-items:center;gap:.75rem}
+.chat-avi{width:40px;height:40px;border-radius:50%;background:var(--or);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.chat-ttl{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;color:#fff}
+.chat-sub{font-size:10px;color:rgba(255,255,255,.45)}
+.online-dot{width:9px;height:9px;border-radius:50%;background:#4ade80;margin-left:auto}
+.chat-tog{display:flex;gap:6px;padding:.6rem 1.1rem;background:#fff;border-bottom:1px solid var(--app-bd)}
+.ct-btn{flex:1;padding:6px;border-radius:8px;border:1px solid var(--app-bd);background:none;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--app-muted);transition:all .2s}
+.ct-btn.active{background:var(--or);border-color:var(--or);color:#fff}
+.chat-msgs{height:260px;overflow-y:auto;padding:.75rem 1.1rem;display:flex;flex-direction:column;gap:8px;background:var(--app-bg)}
+.msg{max-width:82%;padding:.6rem .85rem;border-radius:14px;font-size:13px;line-height:1.5}
+.msg-ai{background:var(--app-card);border:1px solid var(--app-bd);color:var(--app-text);align-self:flex-start;border-bottom-left-radius:4px}
+.msg-user{background:var(--or);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.typing{display:none;align-self:flex-start;background:var(--app-card);border:1px solid var(--app-bd);border-radius:14px;border-bottom-left-radius:4px;padding:.5rem .85rem}
+.typing span{display:inline-block;width:6px;height:6px;background:var(--app-muted);border-radius:50%;margin:0 2px;animation:blink 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.2}40%{opacity:1}}
+.qreplies{display:flex;gap:6px;overflow-x:auto;padding:.5rem 1.1rem;background:#fff;border-bottom:1px solid var(--app-bd);scrollbar-width:none}
+.qreplies::-webkit-scrollbar{display:none}
+.qreplies button{background:var(--orl);border:none;color:var(--or);font-size:11px;padding:5px 12px;border-radius:20px;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.chat-inp-row{display:flex;gap:8px;padding:.75rem 1.1rem;background:#fff;border-top:1px solid var(--app-bd)}
+.chat-inp{flex:1;border:1px solid var(--app-bd);border-radius:24px;padding:8px 14px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;background:var(--app-bg);color:var(--app-text)}
+.chat-send{background:var(--or);border:none;border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;color:#fff;font-size:17px}
+
+/* PARENTS */
+.par-hero{background:linear-gradient(135deg,#1e3a5f,#0f2744);padding:1.2rem 1.1rem}
+.par-lbl{font-size:11px;color:rgba(255,255,255,.45);margin-bottom:.75rem}
+.child-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:1rem}
+.child-sts{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#fff;margin-bottom:.75rem}
+.sts-dot{width:10px;height:10px;border-radius:50%;background:var(--green);animation:puls2 2s infinite;flex-shrink:0}
+@keyframes puls2{0%,100%{box-shadow:0 0 0 3px rgba(22,163,74,.2)}50%{box-shadow:0 0 0 6px rgba(22,163,74,.08)}}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-box{background:rgba(255,255,255,.07);border-radius:10px;padding:.7rem;text-align:center}
+.stat-val{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:#fff}
+.stat-lbl{font-size:10px;color:rgba(255,255,255,.4);margin-top:2px}
+.act-item{display:flex;gap:.75rem;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--app-bd)}
+.act-item:last-child{border-bottom:none}
+.act-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px}
+.ai-green{background:rgba(22,163,74,.1);color:var(--green)}
+.ai-or{background:var(--orl);color:var(--or)}
+.ai-blue{background:rgba(24,95,165,.1);color:var(--blue)}
+.act-ttl{font-size:12px;font-weight:500;color:var(--app-text)}
+.act-tm{font-size:10px;color:var(--app-muted);margin-top:1px}
+.par-ta{width:100%;border:1px solid var(--app-bd);border-radius:10px;padding:.6rem;font-family:'DM Sans',sans-serif;font-size:13px;resize:none;outline:none;background:var(--app-bg);color:var(--app-text);margin-bottom:8px}
+.btn-full{width:100%;background:var(--or);color:#fff;border:none;border-radius:10px;padding:.75rem;font-family:'Syne',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer}
+.sos-btn-big{width:100%;background:var(--red);color:#fff;border:none;border-radius:12px;padding:.85rem;font-family:'Syne',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:1rem}
+
+/* TIFFIN */
+.tif-hero{background:var(--or);padding:1rem 1.1rem;color:#fff}
+.tif-ttl{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800}
+.tif-sub{font-size:11px;opacity:.8;margin-top:2px}
+.tif-filter{display:flex;gap:6px;overflow-x:auto;padding:.6rem 1.1rem;border-bottom:1px solid var(--app-bd);background:#fff;scrollbar-width:none}
+.tif-filter::-webkit-scrollbar{display:none}
+.tf{background:var(--app-card);border:1px solid var(--app-bd);color:var(--app-muted);font-size:11px;padding:5px 12px;border-radius:20px;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all .2s}
+.tf.active{background:var(--or);border-color:var(--or);color:#fff}
+.tif-card{background:var(--app-card);border:1px solid var(--app-bd);border-radius:14px;padding:1rem;margin-bottom:8px;display:flex;gap:.75rem;align-items:center}
+.tif-img{width:52px;height:52px;border-radius:10px;background:var(--orl);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.tif-name{font-weight:500;font-size:13px;margin-bottom:2px;color:var(--app-text)}
+.tif-meta{font-size:11px;color:var(--app-muted);margin-bottom:4px;line-height:1.4}
+.tif-price{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;color:var(--or)}
+.tif-btn{margin-left:auto;background:var(--or);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0}
+
+/* MEDICAL */
+.emg-banner{background:var(--red);padding:1rem 1.1rem;display:flex;align-items:center;gap:.75rem}
+.emg-ttl{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;color:#fff}
+.emg-sub{font-size:11px;color:rgba(255,255,255,.7);margin-top:2px}
+.emg-sos{background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);border-radius:12px;padding:.6rem 1.2rem;color:#fff;font-family:'Syne',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;display:flex;align-items:center;gap:6px;flex-shrink:0}
+.q-med{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:.75rem 1.1rem}
+.med-q{text-align:center;cursor:pointer;transition:transform .2s;background:var(--app-card);border:1px solid var(--app-bd);border-radius:14px;padding:1rem}
+.med-q:hover{transform:translateY(-2px)}
+.med-lbl{font-size:12px;font-weight:500;margin-top:6px;color:var(--app-text)}
+.med-sub2{font-size:10px;color:var(--app-muted);margin-top:1px}
+.doc-card{background:var(--app-card);border:1px solid var(--app-bd);border-radius:14px;padding:1rem;margin-bottom:8px;display:flex;gap:.75rem;align-items:center}
+.doc-avi{width:44px;height:44px;border-radius:50%;background:rgba(24,95,165,.1);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.doc-name{font-weight:500;font-size:13px;color:var(--app-text)}
+.doc-spec{font-size:11px;color:var(--blue);margin-bottom:2px}
+.doc-meta{font-size:10px;color:var(--app-muted)}
+.doc-btn{margin-left:auto;border:1px solid var(--blue);color:var(--blue);background:none;border-radius:8px;padding:6px 12px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0}
+.hlp-card{display:flex;gap:.75rem;align-items:center;background:var(--app-card);border:1px solid var(--app-bd);border-radius:14px;padding:1rem;margin-bottom:8px}
+.hlp-icon{width:42px;height:42px;border-radius:50%;background:var(--orl);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.hlp-name{font-size:13px;font-weight:500;color:var(--app-text)}
+.hlp-num{font-size:11px;color:var(--app-muted);margin-top:2px}
+.hlp-free{font-size:10px;color:var(--green);margin-top:2px}
+.hlp-call{margin-left:auto;background:var(--green);color:#fff;border:none;border-radius:8px;padding:5px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0}
+
+/* SUGGESTION BOX */
+.sug-hero{background:linear-gradient(135deg,#1a1a2e,#16213e);padding:1.2rem 1.1rem;text-align:center;color:#fff}
+.sug-hero-ttl{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800}
+.sug-hero-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px}
+.sug-anon-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:4px 12px;font-size:10px;color:rgba(255,255,255,.6);margin-top:8px}
+.sug-type-sel{display:flex;gap:8px;padding:.75rem 1.1rem;background:#fff;border-bottom:1px solid var(--app-bd);overflow-x:auto;scrollbar-width:none}
+.sug-type-sel::-webkit-scrollbar{display:none}
+.sug-type{background:var(--app-bg);border:1px solid var(--app-bd);color:var(--app-muted);font-size:11px;padding:5px 12px;border-radius:20px;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all .2s}
+.sug-type.active{background:var(--or);border-color:var(--or);color:#fff}
+.sug-form{padding:1rem 1.1rem}
+.sug-label{font-size:12px;font-weight:500;color:var(--app-muted);margin-bottom:6px;display:block}
+.sug-ta{width:100%;border:1px solid var(--app-bd);border-radius:10px;padding:.75rem;font-family:'DM Sans',sans-serif;font-size:13px;resize:none;outline:none;background:var(--app-bg);color:var(--app-text);margin-bottom:.75rem;line-height:1.6}
+.sug-ta:focus{border-color:var(--or)}
+.sug-gender-note{font-size:11px;color:var(--app-muted);background:var(--orl);border-radius:8px;padding:.5rem .75rem;margin-bottom:.75rem;display:flex;align-items:center;gap:6px}
+.sug-submit{width:100%;background:var(--or);color:#fff;border:none;border-radius:10px;padding:.8rem;font-family:'Syne',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer}
+.sug-past{padding:0 1.1rem 1rem}
+.sug-item{background:var(--app-card);border:1px solid var(--app-bd);border-radius:12px;padding:.9rem;margin-bottom:8px}
+.sug-item-head{display:flex;align-items:center;gap:8px;margin-bottom:.4rem}
+.sug-cat{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;background:var(--orl);color:var(--or)}
+.sug-status{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500}
+.ss-done{background:rgba(22,163,74,.1);color:var(--green)}
+.ss-progress{background:rgba(24,95,165,.1);color:var(--blue)}
+.ss-new{background:rgba(186,117,23,.1);color:var(--amber)}
+.sug-text{font-size:12px;color:var(--app-text);line-height:1.5;margin-bottom:.4rem}
+.sug-ai-reply{font-size:11px;color:var(--app-muted);background:var(--app-bg);border-radius:6px;padding:.4rem .6rem;border-left:2px solid var(--or)}
+.sug-time{font-size:10px;color:var(--app-muted);margin-top:4px}
+
+/* NOTES PREVIEW */
+.notes-hero{background:linear-gradient(135deg,#0f2744,#1e3a5f);padding:1.2rem 1.1rem;color:#fff;text-align:center}
+.notes-hero-ttl{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800}
+.notes-hero-sub{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px}
+.notes-tabs{display:flex;gap:0;background:#fff;border-bottom:1px solid var(--app-bd)}
+.ntab{flex:1;padding:.7rem;border:none;background:none;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;color:var(--app-muted);border-bottom:2px solid transparent;transition:all .2s}
+.ntab.active{color:var(--or);border-bottom-color:var(--or);font-weight:500}
+.notes-content{padding:1rem 1.1rem}
+.ch-preview{background:var(--app-card);border:1px solid var(--app-bd);border-radius:12px;padding:1rem;margin-bottom:8px}
+.ch-prev-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem}
+.ch-num-badge{font-family:'Syne',sans-serif;font-size:10px;font-weight:800;color:var(--or)}
+.ch-free-tag{font-size:10px;padding:2px 8px;border-radius:20px;background:rgba(22,163,74,.1);color:var(--green);font-weight:500}
+.ch-name{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;margin-bottom:4px;color:var(--app-text)}
+.ch-desc{font-size:11px;color:var(--app-muted);line-height:1.5;margin-bottom:.6rem}
+.ch-topics{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:.6rem}
+.ch-topic{font-size:10px;background:var(--orl);color:var(--or);padding:2px 8px;border-radius:20px}
+.ch-footer{display:flex;justify-content:space-between;align-items:center}
+.ch-pages{font-size:10px;color:var(--app-muted)}
+.ch-btn{font-size:11px;padding:5px 12px;border-radius:8px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif}
+.ch-btn-free{background:var(--or);color:#fff}
+.ch-btn-lock{background:var(--app-bg);border:1px solid var(--app-bd);color:var(--app-muted)}
+.notes-cta{margin:0 1.1rem 1rem;background:linear-gradient(135deg,var(--or),var(--ord));border-radius:14px;padding:1.2rem;text-align:center;color:#fff}
+.notes-cta-ttl{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;margin-bottom:4px}
+.notes-cta-sub{font-size:11px;opacity:.8;margin-bottom:.75rem}
+.notes-cta-btn{background:#fff;color:var(--or);border:none;border-radius:8px;padding:8px 20px;font-family:'Syne',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer}
+
+/* GIRLS SAFETY */
+.saf-hero{background:linear-gradient(135deg,#9d174d,#7c3aed);padding:1.5rem 1.2rem;text-align:center;color:#fff}
+.saf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.saf-tool{background:var(--app-card);border:1px solid rgba(219,39,119,.15);border-radius:14px;padding:1rem;text-align:center;cursor:pointer;transition:all .2s}
+.saf-tool:hover{border-color:#ec4899;transform:translateY(-2px)}
+.st-icon{font-size:28px;margin-bottom:.4rem}
+.st-ttl{font-size:13px;font-weight:500;margin-bottom:2px;color:var(--app-text)}
+.st-sub{font-size:10px;color:var(--app-muted);line-height:1.4}
+.trusted-item{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--app-bd);font-size:13px;color:var(--app-text)}
+.trusted-item:last-child{border-bottom:none}
+.tip-item{font-size:12px;color:var(--app-muted);padding:.4rem 0;border-bottom:1px solid var(--app-bd);line-height:1.5}
+.tip-item:last-child{border-bottom:none}
+
+/* BOTTOM NAV */
+.app-bnav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--app-bd);display:flex;z-index:50;max-width:480px;margin:0 auto}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;padding:.5rem 0;gap:2px;cursor:pointer;color:var(--app-muted);font-size:9px;border:none;background:none;font-family:'DM Sans',sans-serif;transition:color .2s}
+.bn i{font-size:19px}
+.bn.active{color:var(--or)}
+
+/* MODALS */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center;z-index:200;padding:1rem}
+.overlay.open{display:flex}
+.modal-box{background:#fff;border-radius:20px;padding:1.5rem;width:100%;max-width:440px;text-align:center}
+.modal-box h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:.5rem;color:var(--red)}
+.modal-box p{font-size:13px;color:var(--app-muted);line-height:1.6;margin-bottom:1rem}
+.sos-confirm{width:100%;padding:.8rem;background:var(--red);color:#fff;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;margin-bottom:8px}
+.sos-cancel{width:100%;padding:.8rem;background:#f1f5f9;color:var(--app-text);border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer}
+
+/* LOGIN */
+.login-screen{position:fixed;inset:0;background:#1A0A00;display:flex;align-items:center;justify-content:center;z-index:999;padding:1rem}
+.login-box{background:#fff;border-radius:20px;padding:1.75rem;width:100%;max-width:380px}
+.login-logo{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--or);text-align:center;margin-bottom:4px}
+.login-logo span{color:var(--app-text)}
+.login-tag{text-align:center;font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:4px}
+.login-sub2{text-align:center;font-size:12px;color:var(--app-muted);margin-bottom:1.25rem;line-height:1.5}
+.btn-google{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:.75rem;border:1px solid var(--app-bd);border-radius:10px;background:#fff;font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;margin-bottom:.75rem;transition:all .2s;color:var(--app-text)}
+.btn-google:hover{background:var(--app-bg);border-color:var(--or)}
+.login-div{text-align:center;color:var(--app-muted);font-size:12px;margin:.5rem 0}
+.login-inp{width:100%;padding:.7rem .9rem;border:1px solid var(--app-bd);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;margin-bottom:.6rem;outline:none;background:var(--app-bg);color:var(--app-text)}
+.login-inp:focus{border-color:var(--or)}
+.btn-login{width:100%;background:var(--or);color:#fff;border:none;border-radius:10px;padding:.8rem;font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;cursor:pointer;margin-top:.25rem}
+.login-priv{display:block;text-align:center;font-size:11px;color:var(--or);margin-top:.75rem;cursor:pointer}
+
+/* REFERRAL */
+.ref-card{background:linear-gradient(135deg,#FFF0E6,#FFF8F4);border:1px solid rgba(216,90,48,.25);border-radius:14px;padding:1rem;margin-bottom:8px}
+.ref-code{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--or);letter-spacing:.1em;margin-bottom:.4rem}
+.ref-desc{font-size:12px;color:var(--app-text);margin-bottom:4px;line-height:1.5}
+.ref-note{font-size:11px;color:var(--app-muted);margin-bottom:.75rem}
+.btn-copy{background:var(--or);color:#fff;border:none;border-radius:8px;padding:7px 16px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+
+/* SAFETY BANNER */
+.saf-banner{display:flex;align-items:center;gap:.75rem;background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid rgba(219,39,119,.2);border-radius:14px;padding:.9rem 1rem;margin:.75rem 1.1rem}
+.saf-ttl{font-size:13px;font-weight:500;color:#9d174d}
+.saf-sub{font-size:11px;color:#be185d;margin-top:1px}
+.saf-go{margin-left:auto;background:#ec4899;color:#fff;border:none;border-radius:8px;padding:5px 12px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;flex-shrink:0}
+
+/* PRIVACY */
+.priv-hero{background:#1A0A00;padding:1.25rem 1.1rem;text-align:center}
+.priv-ttl{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:#fff}
+.priv-date{font-size:11px;color:rgba(255,255,255,.4);margin-top:4px}
+.priv-sec{background:var(--app-card);border:1px solid var(--app-bd);border-radius:12px;padding:1rem;margin-bottom:8px}
+.priv-h{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:800;margin-bottom:.4rem;color:var(--or)}
+.priv-txt{font-size:12px;color:var(--app-muted);line-height:1.7}
+
+/* UTILITY */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--app-bd);border-radius:2px}
+@media(max-width:600px){.l-nav-links{display:none}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="logo">Kota<span>Nest</span></div>
-  <a href="#signup" class="nav-cta">Free mein join karo</a>
-</nav>
+<!-- ============ LANDING PAGE ============ -->
+<div id="landing">
+  <nav class="l-nav">
+    <a class="l-logo">Kota<span>Nest</span></a>
+    <div class="l-nav-links">
+      <a href="#features">Features</a>
+      <a href="#safety">Safety</a>
+      <a href="#notes">Notes</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <button class="l-nav-cta" onclick="showLogin()">App mein aao ↗</button>
+  </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div style="position:relative;z-index:1">
-    <div class="hero-tag">🏠 Kota ke students ke liye</div>
-    <h1>Kota mein<br><span class="accent">akele mat lado</span></h1>
-    <p class="hero-sub">PG dhundho, padhai track karo, kharch manage karo, safe raho — sab ek jagah. Lakhs students ka bharosa.</p>
-    <div class="hero-btns">
-      <a href="#signup" class="btn-primary">Abhi join karo — Free hai</a>
-      <a href="#features" class="btn-secondary">Features dekho</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat"><div class="stat-num">50K+</div><div class="stat-label">Students</div></div>
-      <div class="stat"><div class="stat-num">2000+</div><div class="stat-label">Verified PGs</div></div>
-      <div class="stat"><div class="stat-num">₹0</div><div class="stat-label">Shuru karne ki cost</div></div>
-      <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Saathi AI</div></div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- PROBLEMS -->
-<section class="section">
-  <div class="section-tag">Problem</div>
-  <h2 class="section-title">Kota aata hai sapna lekar,<br>milta hai confusion</h2>
-  <p class="section-sub">Yeh problems har student face karta hai — aur ab tak koi solution nahi tha.</p>
-  <div class="problems-grid">
-    <div class="problem-card"><div class="p-icon">🏠</div><div class="p-title">Fake PG listings</div><div class="p-desc">Photos mein palace, reality mein dungeon. Broker ke chakkar mein ₹5000 advance gone.</div></div>
-    <div class="problem-card"><div class="p-icon">💸</div><div class="p-title">Paisa kahan gaya?</div><div class="p-desc">Mahine ke aakhir mein account zero — aur pata nahi kyun. No tracking, no budget.</div></div>
-    <div class="problem-card"><div class="p-icon">😰</div><div class="p-title">Parents se pressure</div><div class="p-desc">Ghar se phone aata hai "kaisa chal raha hai?" — aur tumhare paas jawab nahi.</div></div>
-    <div class="problem-card"><div class="p-icon">📚</div><div class="p-title">Padhai track nahi</div><div class="p-desc">Mock test diye, weak topics pata nahi, revision plan zero. Exam aata hai, tum unready.</div></div>
-    <div class="problem-card"><div class="p-icon">🍱</div><div class="p-title">Khaana dhundna</div><div class="p-desc">Roz ka sawaal — aaj kahan khaayein? Tiffin services ka koi reliable review nahi.</div></div>
-    <div class="problem-card"><div class="p-icon">🆘</div><div class="p-title">Emergency mein akela</div><div class="p-desc">Raat ko tabiyat kharab, cycle puncture, koi jaata nahi — helpless feel.</div></div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- FEATURES -->
-<section class="section" id="features">
-  <div class="section-tag">Solution</div>
-  <h2 class="section-title">KotaNest kya karta hai?</h2>
-  <p class="section-sub">11 features, ek platform — specifically Kota ke liye bana.</p>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="f-icon" style="background:rgba(255,107,43,0.12)">🏠</div>
-      <div class="f-title">PG Finder</div>
-      <div class="f-desc">Verified listings, real photos, student reviews. Broker zero, fake zero.</div>
-      <span class="f-badge badge-new">Verified</span>
-    </div>
-    <div class="feature-card">
-      <div class="f-icon" style="background:rgba(59,130,246,0.12)">🤖</div>
-      <div class="f-title">Saathi AI</div>
-      <div class="f-desc">Padhai, mental health, PG — kisi bhi sawaal ka jawab. 24/7.</div>
-      <span class="f-badge badge-hot">Hot</span>
-    </div>
-    <div class="feature-card">
-      <div class="f-icon" style="background:rgba(46,204,113,0.12)">👨‍👩‍👧</div>
-      <div class="f-title">Parents Dashboard</div>
-      <div class="f-desc">Parents ko real-time update — padhai, attendance, safety. Calls kam hote hain.</div>
-      <span class="f-badge badge-new">New</span>
-    </div>
-    <div class="feature-card">
-      <div class="f-icon" style="background:rgba(255,107,43,0.12)">🍱</div>
-      <div class="f-title">Tiffin Finder</div>
-      <div class="f-desc">Area ke hisaab se tiffin dhundho, reviews dekho, direct order karo.</div>
-    </div>
-    <div class="feature-card">
-      <div class="f-icon" style="background:rgba(232,121,160,0.12)">🆘</div>
-      <div class="f-title">SOS Button</div>
-      <div class="f-desc">Emergency mein ek tap — location share, trusted contacts alert, help arrives.</div>
-      <span class="f-badge badge-safe">Safety</span>
-    </div>
-    <div class="feature-card">
-      <div class="f-icon" style="background:rgba(255,107,43,0.12)">📊</div>
-      <div class="f-title">Study Tracker</div>
-      <div class="f-desc">Daily hours, mock scores, weak topics, revision plan — sab track hota hai.</div>
-    </div>
-    <div class="feature-card">
-      <div class="f-icon" style="background:rgba(46,204,113,0.12)">💰</div>
-      <div class="f-title">Expense Tracker</div>
-      <div class="f-desc">Budget set karo, kharch daalo, AI advice lo — paisa kabhi nahi khatam hoga.</div>
-    </div>
-    <div class="feature-card">
-      <div class="f-icon" style="background:rgba(59,130,246,0.12)">🤝</div>
-      <div class="f-title">Roommate Finder</div>
-      <div class="f-desc">Coaching, area, budget ke hisaab se perfect roommate dhundho.</div>
-      <span class="f-badge badge-new">New</span>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- GIRLS SECTION -->
-<section class="section" style="padding-top:60px;padding-bottom:60px">
-  <div class="girls-section">
-    <div style="font-size:48px;margin-bottom:16px">💪</div>
-    <h2 class="girls-title">Kota ki <span class="pink">Choriyaan</span></h2>
-    <p style="color:var(--muted);font-size:17px;max-width:500px;margin:0 auto 32px;line-height:1.7;font-weight:300">Girls ke liye special features — Didi Chat, verified safe PGs, girls-only notice board, emergency SOS. Kyunki safety sirf ek feature nahi, priority hai.</p>
-    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-      <div style="background:rgba(232,121,160,0.1);border:1px solid rgba(232,121,160,0.25);padding:10px 20px;border-radius:100px;font-size:14px;color:var(--pink)">👩 Didi Chat — Senior guidance</div>
-      <div style="background:rgba(232,121,160,0.1);border:1px solid rgba(232,121,160,0.25);padding:10px 20px;border-radius:100px;font-size:14px;color:var(--pink)">🏠 Girls-verified PGs only</div>
-      <div style="background:rgba(232,121,160,0.1);border:1px solid rgba(232,121,160,0.25);padding:10px 20px;border-radius:100px;font-size:14px;color:var(--pink)">🆘 One-tap SOS</div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- REFERRAL -->
-<section class="referral-section">
-  <div class="section-tag">Earn</div>
-  <h2 class="section-title">Atmanirbhar Student 💪</h2>
-  <p style="color:var(--muted);font-size:17px;max-width:480px;margin:0 auto;line-height:1.7;font-weight:300">Dosto ko refer karo, paise kamao. Coaching fee khud nikalo.</p>
-  <div class="slider-wrap">
-    <div class="slider-label"><span>Kitne dost refer kiye?</span><span id="refCount">10 dost</span></div>
-    <input type="range" id="refSlider" min="1" max="100" value="10">
-    <div class="earning-display" id="earningAmt">₹2,000</div>
-    <div class="earning-sub">per month kamaoge 🎉</div>
-    <p style="font-size:13px;color:var(--muted);margin-top:20px">100 dost refer karo → <strong style="color:var(--orange)">₹20,000/month</strong> — coaching fees se zyada!</p>
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- PRICING -->
-<section class="section" id="pricing">
-  <div class="section-tag">Pricing</div>
-  <h2 class="section-title">Simple aur fair</h2>
-  <p class="section-sub">Shuru karo free mein, badho jab ready ho.</p>
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="price-name">Free</div>
-      <div class="price-amount">₹0</div>
-      <div class="price-period">hamesha ke liye</div>
-      <ul class="price-features">
-        <li>PG Finder</li>
-        <li>Basic Saathi AI (5 msgs/day)</li>
-        <li>Study Tracker</li>
-        <li>SOS Button</li>
-        <li>Notice Board</li>
-      </ul>
-      <a href="#signup" class="price-btn price-btn-outline">Abhi shuru karo</a>
-    </div>
-    <div class="price-card featured">
-      <div style="font-size:12px;color:var(--orange);font-weight:600;letter-spacing:0.06em;margin-bottom:8px">⭐ MOST POPULAR</div>
-      <div class="price-name">Pro</div>
-      <div class="price-amount">₹99<span>/month</span></div>
-      <div class="price-period">ya ₹799/year — 2 mahine free</div>
-      <ul class="price-features">
-        <li>Sab Free features</li>
-        <li>Unlimited Saathi AI</li>
-        <li>Parents Dashboard</li>
-        <li>Expense Tracker + AI advice</li>
-        <li>Roommate Finder</li>
-        <li>Girls Safety features</li>
-        <li>Priority support</li>
-      </ul>
-      <a href="#signup" class="price-btn price-btn-filled">Pro try karo</a>
-    </div>
-    <div class="price-card">
-      <div class="price-name">Notes Bundle</div>
-      <div class="price-amount">₹49</div>
-      <div class="price-period">ek baar payment</div>
-      <ul class="price-features">
-        <li>Top rankers ke notes</li>
-        <li>Previous year questions</li>
-        <li>Subject-wise PDFs</li>
-        <li>Lifetime access</li>
-      </ul>
-      <a href="#signup" class="price-btn price-btn-outline">Notes khariddo</a>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- TESTIMONIALS -->
-<section class="section">
-  <div class="section-tag">Reviews</div>
-  <h2 class="section-title">Students kya kehte hain</h2>
-  <div class="testimonials-grid">
-    <div class="testi-card">
-      <div class="testi-text">KotaNest se pehle 3 fake PGs dekhiye — paisa aur time dono waste. Iske baad seedha verified PG mila, ek din mein.</div>
-      <div class="testi-author">
-        <div class="avatar" style="background:rgba(255,107,43,0.15);color:var(--orange)">RK</div>
-        <div><div class="author-name">Rahul K.</div><div class="author-info">JEE 2025, Rajasthan</div></div>
+  <!-- HERO -->
+  <div class="l-hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-inner">
+      <div class="hero-badge"><div class="hero-dot"></div>Kota, Rajasthan — Students ke liye</div>
+      <h1>Kota mein ab<br/><span class="accent">akele nahi ho</span><br/><span class="accent2">yaar.</span></h1>
+      <p class="hero-sub">PG dhundna, khana, mental health, parents dashboard, safety — sab ek jagah. Bilkul free mein.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="showLogin()">KotaNest join karo — Free ↗</button>
+        <a class="btn-secondary" href="#features">Features dekho →</a>
       </div>
-    </div>
-    <div class="testi-card">
-      <div class="testi-text">Parents ko ab roz call nahi karna padata. Dashboard pe sab dikh jaata hai — unko chain milti hai, mujhe peace.</div>
-      <div class="testi-author">
-        <div class="avatar" style="background:rgba(232,121,160,0.15);color:var(--pink)">PS</div>
-        <div><div class="author-name">Priya S.</div><div class="author-info">NEET 2025, MP</div></div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="testi-text">Expense tracker ne zindagi badal di. Pehle mahine ke end mein zero hota tha account. Ab budget 100% control mein hai.</div>
-      <div class="testi-author">
-        <div class="avatar" style="background:rgba(59,130,246,0.15);color:var(--blue)">AM</div>
-        <div><div class="author-name">Arjun M.</div><div class="author-info">JEE Advanced, UP</div></div>
+      <div class="hero-stats">
+        <div><div class="hstat-val">2L+</div><div class="hstat-lbl">Students in Kota</div></div>
+        <div><div class="hstat-val">5 in 1</div><div class="hstat-lbl">Platform features</div></div>
+        <div><div class="hstat-val">₹0</div><div class="hstat-lbl">Free mein shuru</div></div>
       </div>
     </div>
   </div>
-</section>
 
-<hr class="divider">
-
-<!-- FINAL CTA -->
-<section class="cta-section" id="signup">
-  <div class="cta-bg"></div>
-  <div style="position:relative;z-index:1">
-    <h2 class="cta-title">Kota mein<br><span style="color:var(--orange)">ready rehna hai?</span></h2>
-    <p class="cta-sub">Free mein join karo. Credit card nahi chahiye.</p>
-    <div style="max-width:400px;margin:0 auto">
-      <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <input type="email" placeholder="apna email daalo" style="flex:1;background:var(--card);border:1px solid var(--border);color:var(--text);padding:14px 18px;border-radius:100px;font-size:15px;outline:none;min-width:200px">
-        <button onclick="alert('🎉 Welcome to KotaNest! We will notify you when we launch!')" style="background:var(--orange);color:#fff;border:none;padding:14px 28px;border-radius:100px;font-size:15px;font-weight:500;cursor:pointer;transition:opacity 0.2s" onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">Join karo</button>
+  <!-- PROBLEMS -->
+  <section class="l-sec dark" id="problems">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="sec-tag">Reality of Kota</div>
+      <h2 class="sec-title">Kota mein yeh sab<br/>koi nahi bolta</h2>
+      <p class="sec-sub">Par hum bolta hain — aur solve bhi karta hain.</p>
+      <div class="prob-grid">
+        <div class="prob-card"><div class="prob-icon">🏠</div><div class="prob-title">PG dhundna mushkil</div><div class="prob-desc">Kota aate hi sabse pehli problem — kahan rahein? Verified listings nahi, scam bahut hain.</div></div>
+        <div class="prob-card"><div class="prob-icon">🧠</div><div class="prob-title">Mental health ignored</div><div class="prob-desc">Pressure itna zyada ki bachche toot jaate hain. Koi sunne waala nahi — ghar se door.</div></div>
+        <div class="prob-card"><div class="prob-icon">👨‍👩‍👦</div><div class="prob-title">Parents ki tension</div><div class="prob-desc">Ghar pe maa-papa ko pata nahi bachcha theek bhi hai ya nahi — anxiety 24/7.</div></div>
+        <div class="prob-card"><div class="prob-icon">🍽️</div><div class="prob-title">Khana ka jhanjhat</div><div class="prob-desc">Mess ka khana bekar, tiffin dhundna time waste — aur healthy khana toh sapna hai.</div></div>
+        <div class="prob-card"><div class="prob-icon">🛡️</div><div class="prob-title">Girls ki safety</div><div class="prob-desc">Raat ko bahar jaana, hostel curfew, emergency mein akele — yeh sab real problems hain.</div></div>
+        <div class="prob-card"><div class="prob-icon">💊</div><div class="prob-title">Medical emergency</div><div class="prob-desc">Beemar pade toh doctor kahan? Ambulance ka number? Parents ko kaise batayein?</div></div>
       </div>
-      <p style="color:var(--muted);font-size:13px;margin-top:16px">🔒 Spam nahi karenge. Promise.</p>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="l-sec" id="features">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="sec-tag">Features</div>
+      <h2 class="sec-title">Ek platform —<br/>sab kuch</h2>
+      <p class="sec-sub">Har problem ka solution — ek jagah.</p>
+      <div class="feat-grid">
+        <div class="feat-card c-or"><div class="feat-icon-wrap fi-or">🏠</div><div class="feat-title">PG / Hostel Finder</div><div class="feat-desc">500+ verified listings. Reviews, photos, contact — ghar se book karo. Boys aur Girls alag-alag.</div></div>
+        <div class="feat-card c-teal"><div class="feat-icon-wrap fi-teal">💬</div><div class="feat-title">Saathi Chat</div><div class="feat-desc">AI-powered dost — bhai tone boys ke liye, didi tone girls ke liye. Anonymous, safe, 24/7.</div></div>
+        <div class="feat-card c-blue"><div class="feat-icon-wrap fi-blue">👨‍👩‍👦</div><div class="feat-title">Parents Dashboard</div><div class="feat-desc">Mood, activity, tiffin status — parents ko real-time update. Unki tension khatam.</div></div>
+        <div class="feat-card c-pink"><div class="feat-icon-wrap fi-pink">🛡️</div><div class="feat-title">Girls Safety Hub</div><div class="feat-desc">Fake call, SOS shake, safe route, trusted contacts, Women helpline — sirf girls ke liye.</div></div>
+        <div class="feat-card c-amber"><div class="feat-icon-wrap fi-amber">🍱</div><div class="feat-title">Tiffin Booking</div><div class="feat-desc">Local tiffin services — veg/non-veg, delivery, ratings. Ghar jaisa khana Kota mein.</div></div>
+        <div class="feat-card c-or"><div class="feat-icon-wrap fi-or">💡</div><div class="feat-title">Suggestion Box</div><div class="feat-desc">Students ka feedback seedha hamare paas — har 2-3 mahine mein app update hota hai tumhare suggestions se.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTES PREVIEW -->
+  <section class="l-sec dark" id="notes">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="sec-tag">Study Material</div>
+      <h2 class="sec-title">Physics, Chemistry, Biology —<br/>Hinglish mein</h2>
+      <p class="sec-sub">Tarun sir ke notes — concepts pehle, formulas baad mein. 3 chapters free mein dekho.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:32px">
+        <div class="prob-card" style="border-color:rgba(216,90,48,.3)">
+          <div class="prob-icon">⚛️</div>
+          <div class="prob-title">Talk With Physics</div>
+          <div style="font-size:11px;color:var(--or);margin-bottom:6px;font-weight:600">by Tarun Kumar, M.Sc. Physics ✅ Available</div>
+          <div class="prob-desc">Vol 1 — 15 chapters, 236 pages. Mathematical tools se Advanced tak. JEE + NEET dono. 3 chapters free mein.</div>
+        </div>
+        <div class="prob-card">
+          <div class="prob-icon">🧪</div>
+          <div class="prob-title">Talk With Chemistry</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:600">by Tarun Kumar — 🔜 Coming Soon</div>
+          <div class="prob-desc">Organic, Inorganic, Physical — Tarun sir ki Hinglish style mein. Concepts pehle, formulas baad mein.</div>
+        </div>
+        <div class="prob-card">
+          <div class="prob-icon">🧬</div>
+          <div class="prob-title">Talk With Biology</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:600">by Tarun Kumar — 🔜 Coming Soon</div>
+          <div class="prob-desc">NEET ke liye — diagrams, mnemonics, previous year patterns. Tarun sir ka unique teaching style.</div>
+        </div>
+        <div class="prob-card">
+          <div class="prob-icon">📐</div>
+          <div class="prob-title">Talk With Mathematics</div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:600">by Tarun Kumar — 🔜 Coming Soon</div>
+          <div class="prob-desc">JEE Maths — Calculus, Algebra, Trigonometry. Logic se samjho, ratto mat.</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:40px">
+        <button class="btn-primary" onclick="showLogin()">Free chapters dekho →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAFETY HIGHLIGHT -->
+  <section class="l-sec" id="safety" style="background:linear-gradient(135deg,rgba(157,23,77,0.08),rgba(124,58,237,0.08))">
+    <div style="max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;flex-wrap:wrap">
+      <div>
+        <div class="sec-tag" style="color:#ec4899;background:rgba(236,72,153,.1);border-color:rgba(236,72,153,.2)">Girls Safety</div>
+        <h2 class="sec-title">Kota mein<br/>har ladki safe rahe</h2>
+        <p style="font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:24px">Fake call, SOS shake, Women helpline, Vigyan Nagar police numbers, trusted contacts — sab ek jagah.</p>
+        <button class="btn-primary" style="background:#ec4899" onclick="showLogin()">Safety features dekho →</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="prob-card" style="text-align:center"><div style="font-size:2rem;margin-bottom:8px">📞</div><div class="prob-title" style="font-size:14px">Fake Call</div><div class="prob-desc" style="font-size:12px">10 sec mein incoming call</div></div>
+        <div class="prob-card" style="text-align:center"><div style="font-size:2rem;margin-bottom:8px">📳</div><div class="prob-title" style="font-size:14px">SOS Shake</div><div class="prob-desc" style="font-size:12px">Phone hilao — alert jaaye</div></div>
+        <div class="prob-card" style="text-align:center"><div style="font-size:2rem;margin-bottom:8px">🚔</div><div class="prob-title" style="font-size:14px">Police Numbers</div><div class="prob-desc" style="font-size:12px">Vigyan Nagar local numbers</div></div>
+        <div class="prob-card" style="text-align:center"><div style="font-size:2rem;margin-bottom:8px">🆘</div><div class="prob-title" style="font-size:14px">Women Helpline</div><div class="prob-desc" style="font-size:12px">1091 direct connect</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="l-sec dark" id="pricing">
+    <div style="max-width:1100px;margin:0 auto">
+      <div class="sec-tag">Plans</div>
+      <h2 class="sec-title">Simple pricing —<br/>koi confusion nahi</h2>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-name">Free</div>
+          <div class="price-amount">₹0</div>
+          <div class="price-period">hamesha ke liye</div>
+          <ul class="price-features">
+            <li>PG Finder</li><li>Saathi Chat — <strong>Unlimited</strong> 🔥</li><li>SOS button</li><li>Tiffin listings</li><li>3 sample chapters</li><li>Mental health support</li>
+          </ul>
+          <button class="price-btn outline" onclick="showLogin()">Free mein shuru karo</button>
+        </div>
+        <div class="price-card featured">
+          <div class="featured-badge">Most Popular</div>
+          <div class="price-name" style="color:var(--or)">Pro Student</div>
+          <div class="price-amount" style="color:var(--or)">₹199</div>
+          <div class="price-period">per month</div>
+          <ul class="price-features">
+            <li>Sab free features</li><li>Parents Dashboard</li><li>Girls Safety features</li><li>Tiffin booking</li><li>Referral earning ₹50/friend</li><li>Full Notes — Physics, Chem, Maths, Bio</li><li>Priority support</li>
+          </ul>
+          <button class="price-btn solid" onclick="showLogin()">₹199 mein shuru karo →</button>
+        </div>
+        <div class="price-card">
+          <div class="price-name">Notes Bundle</div>
+          <div class="price-amount">₹149</div>
+          <div class="price-period">lifetime access</div>
+          <ul class="price-features">
+            <li>Talk With Physics Vol 1</li><li>Chemistry shortcuts</li><li>Maths formula sheets</li><li>Biology NCERT notes</li><li>Mock test papers</li><li>Monthly updates</li>
+          </ul>
+          <button class="price-btn outline" onclick="showLogin()">₹149 mein lo →</button>
+        </div>
+        <div class="price-card">
+          <div class="price-name">Talk With Series</div>
+          <div class="price-amount">₹49–</div>
+          <div class="price-period">per book (PDF)</div>
+          <ul class="price-features">
+            <li>Talk With Physics Vol 1 ✅</li><li>Talk With Chemistry 🔜</li><li>Talk With Biology 🔜</li><li>Talk With Maths 🔜</li><li>Sirf Tarun Kumar ki books</li>
+          </ul>
+          <button class="price-btn outline" onclick="showLogin()">Free chapters dekho</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="final-cta-glow"></div>
+    <div class="sec-tag">Join karo</div>
+    <h2>Kota mein ab<br/><span style="color:var(--or)">akele nahi ho.</span></h2>
+    <p>Free mein shuru karo — koi credit card nahi, koi panga nahi.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative">
+      <button class="btn-primary" style="font-size:18px;padding:16px 40px" onclick="showLogin()">KotaNest join karo — Free ↗</button>
+    </div>
+  </section>
+
+  <footer>
+    <div><div class="footer-brand">Kota<span>Nest</span></div><div class="footer-text" style="margin-top:6px">Made with ❤️ for Kota students — by Tarun Kumar, MSc Physics</div></div>
+    <div class="footer-links"><a onclick="showLogin();setTimeout(()=>agoto('privacy'),500)">Privacy</a><a href="#pricing">Plans</a><a href="https://instagram.com" target="_blank">Instagram</a></div>
+    <div class="footer-text">© 2026 KotaNest</div>
+  </footer>
+</div>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="loginScreen" class="login-screen" style="display:none">
+  <div class="login-box">
+    <div class="login-logo">Kota<span>Nest</span></div>
+    <div class="login-tag">Kota mein tera ghar 🏠</div>
+    <p class="login-sub2">Sirf students ke liye — safe, anonymous, helpful</p>
+    <button class="btn-google" onclick="fakeGoogle()">
+      <img src="https://www.google.com/favicon.ico" width="18" height="18" alt="G"/>Google se login karo
+    </button>
+    <div class="login-div">ya</div>
+    <input class="login-inp" id="lName" placeholder="Apna naam likho"/>
+    <select class="login-inp" id="lGender">
+      <option value="">Gender select karo</option>
+      <option value="male">Boy 👦</option>
+      <option value="female">Girl 👧</option>
+      <option value="other">Other</option>
+    </select>
+    <input class="login-inp" id="lRef" placeholder="Referral code (optional)"/>
+    <button class="btn-login" onclick="doLogin()">KotaNest mein aao ↗</button>
+    <a class="login-priv" onclick="document.getElementById('loginScreen').style.display='none';document.getElementById('landing').style.display='block'">← Wapas jao</a>
+  </div>
+</div>
+
+<!-- ============ MAIN APP ============ -->
+<div id="appShell">
+  <nav class="app-nav">
+    <div class="app-logo">Kota<span>Nest</span></div>
+    <div class="app-nav-user">
+      <span class="app-nav-name" id="navName"></span>
+      <div class="app-avatar" id="navAvi"></div>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <div class="apage active" id="ap-home">
+    <div class="app-hero">
+      <div class="app-hero-ey" id="heroGreet">Namaste 👋</div>
+      <h1>Tera <em>ghar</em><br/>Kota mein</h1>
+      <p>PG, khana, health, parents — sab ek jagah.</p>
+      <div class="hero-sts">
+        <div><div class="hs-n" id="sDays">1</div><div class="hs-l">Din Kota mein</div></div>
+        <div><div class="hs-n">4.2★</div><div class="hs-l">PG Rating</div></div>
+        <div><div class="hs-n">Safe</div><div class="hs-l">Status</div></div>
+      </div>
+      <div class="qbtns">
+        <button class="qb" onclick="agoto('chat')"><span class="qb-icon">💬</span><div class="qb-title">Saathi Chat</div><div class="qb-sub">Mental health</div></button>
+        <button class="qb" onclick="agoto('parents')"><span class="qb-icon">👨‍👩‍👦</span><div class="qb-title">Parents</div><div class="qb-sub">Update bhejo</div></button>
+        <button class="qb" onclick="agoto('notes')"><span class="qb-icon">📚</span><div class="qb-title">Notes</div><div class="qb-sub">Free chapters</div></button>
+        <button class="qb" onclick="agoto('medical')"><span class="qb-icon">🏥</span><div class="qb-title">Medical</div><div class="qb-sub">Doctor + SOS</div></button>
+      </div>
+    </div>
+    <div id="girlsBanner" style="display:none">
+      <div class="saf-banner">
+        <span style="font-size:24px">🛡️</span>
+        <div><div class="saf-ttl">Girls Safety Features ON</div><div class="saf-sub">Fake call, SOS shake, helpline — active</div></div>
+        <button class="saf-go" onclick="agoto('safety')">Dekho →</button>
+      </div>
+    </div>
+    <div class="asec">
+      <div class="asec-head">Aaj ka mood <a onclick="agoto('parents')">Parents ko bhejo →</a></div>
+      <div class="acard">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem"><span style="font-size:13px;font-weight:500;color:var(--app-text)">Mood select karo</span><span class="abadge ab-green" id="moodDisp">Good ✓</span></div>
+        <div class="mood-btns">
+          <button onclick="setMood('😊 Achha')">😊 Achha</button>
+          <button onclick="setMood('😐 Theek')">😐 Theek</button>
+          <button onclick="setMood('😔 Nahi')">😔 Nahi</button>
+        </div>
+      </div>
+    </div>
+    <div class="asec" style="padding-top:0">
+      <div class="asec-head">Referral Code 🎁</div>
+      <div class="ref-card">
+        <div class="ref-code" id="refCode">KOTA-XXXX</div>
+        <div class="ref-desc">Dost ko refer karo — jab wo Pro le tab tera 1 mahina free!</div>
+        <div class="ref-note">⚠️ Sirf payment confirm hone ke baad activate hoga</div>
+        <button class="btn-copy" onclick="copyRef()">Copy karo 📋</button>
+      </div>
+    </div>
+    <div class="asec" style="padding-top:0">
+      <div class="asec-head">Notice board</div>
+      <div class="acard">
+        <div class="notice-item"><span class="abadge ab-or">New</span><span>Allen test — Sunday 10am</span></div>
+        <div class="notice-item" style="margin-bottom:0"><span class="abadge ab-blue">Info</span><span>KotaNest counselor aaj 5-8pm available</span></div>
+      </div>
     </div>
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">Kota<span>Nest</span></div>
-  <div class="footer-copy">© 2025 KotaNest. Made with ❤️ for Kota students.</div>
-</footer>
+  <!-- CHAT -->
+  <div class="apage" id="ap-chat">
+    <div class="chat-hdr">
+      <div class="chat-avi">🤝</div>
+      <div><div class="chat-ttl">KotaNest Saathi</div><div class="chat-sub">Anonymous • Safe • 24/7</div></div>
+      <div class="online-dot"></div>
+    </div>
+    <div class="chat-tog">
+      <button class="ct-btn active" id="btnBhai" onclick="setTone('bhai')">Bhai tone 👦</button>
+      <button class="ct-btn" id="btnDidi" onclick="setTone('didi')">Didi tone 👧</button>
+    </div>
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="msg msg-ai" id="firstMsg">Arre bhai, aa gaya! Kya chal raha hai aaj? Bata de, koi judgment nahi hai yahan.</div>
+      <div class="typing" id="typing"><span></span><span></span><span></span></div>
+    </div>
+    <div class="qreplies">
+      <button onclick="sendMsg('Exam ka pressure bahut zyada ho gaya hai')">Exam pressure</button>
+      <button onclick="sendMsg('Ghar ki yaad aa rahi hai')">Ghar ki yaad</button>
+      <button onclick="sendMsg('Paisa khatam ho gaya hai')">Paisa problem</button>
+      <button onclick="sendMsg('Koi dost nahi hai yahan')">Akela feel</button>
+      <button onclick="sendMsg('Padhai samajh nahi aa rahi')">Padhai problem</button>
+    </div>
+    <div class="chat-inp-row">
+      <input class="chat-inp" id="chatInp" placeholder="Kuch bhi bolo..." onkeydown="if(event.key==='Enter')sendMsg()"/>
+      <button class="chat-send" onclick="sendMsg()"><i class="ti ti-send"></i></button>
+    </div>
+  </div>
+
+  <!-- PARENTS -->
+  <div class="apage" id="ap-parents">
+    <div class="par-hero">
+      <div class="par-lbl" id="parLbl">Parent View</div>
+      <div class="child-card">
+        <div class="child-sts"><div class="sts-dot"></div><span id="childMsg">Safe hai — abhi online</span></div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="stat-val" id="pMood">😊</div><div class="stat-lbl">Aaj ka mood</div></div>
+          <div class="stat-box"><div class="stat-val">✓ Khaya</div><div class="stat-lbl">Lunch status</div></div>
+          <div class="stat-box"><div class="stat-val" id="pDays">1</div><div class="stat-lbl">Din Kota mein</div></div>
+          <div class="stat-box"><div class="stat-val">₹2,400</div><div class="stat-lbl">Balance left</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="asec">
+      <div class="asec-head">Aaj ki activity</div>
+      <div class="acard">
+        <div class="act-item"><div class="act-icon ai-green"><i class="ti ti-check"></i></div><div><div class="act-ttl">App open kiya</div><div class="act-tm">Aaj, 8:32 AM</div></div><span class="abadge ab-green" style="margin-left:auto">Safe</span></div>
+        <div class="act-item"><div class="act-icon ai-or"><i class="ti ti-soup"></i></div><div><div class="act-ttl">Tiffin book kiya</div><div class="act-tm">Aaj, 9:15 AM</div></div></div>
+        <div class="act-item"><div class="act-icon ai-blue"><i class="ti ti-heart"></i></div><div><div class="act-ttl">Chat session — 12 min</div><div class="act-tm">Kal, 9:40 PM</div></div></div>
+      </div>
+      <div class="asec-head" style="margin-top:.75rem">Parents ko message bhejo</div>
+      <div class="acard">
+        <textarea class="par-ta" id="parMsg" rows="2" placeholder="Maa/Papa ko kuch bolna hai?"></textarea>
+        <button class="btn-full" onclick="sendToParent()">Bhejo ↗</button>
+      </div>
+      <button class="sos-btn-big" onclick="showSOS()"><i class="ti ti-alert-triangle"></i> Emergency SOS — Parents ko Alert karo</button>
+    </div>
+  </div>
+
+  <!-- TIFFIN -->
+  <div class="apage" id="ap-tiffin">
+    <div class="tif-hero"><div class="tif-ttl">Tiffin Book Karo 🍱</div><div class="tif-sub">Ghar jaisa khana, Kota mein</div></div>
+    <div class="tif-filter">
+      <button class="tf active" onclick="filterTif('all',this)">Sab</button>
+      <button class="tf" onclick="filterTif('veg',this)">Pure Veg</button>
+      <button class="tf" onclick="filterTif('nonveg',this)">Non-Veg</button>
+      <button class="tf" onclick="filterTif('cheap',this)">₹80 se kam</button>
+      <button class="tf" onclick="filterTif('delivery',this)">Delivery</button>
+    </div>
+    <div class="asec" id="tifList"></div>
+  </div>
+
+  <!-- MEDICAL -->
+  <div class="apage" id="ap-medical">
+    <div class="emg-banner">
+      <div><div class="emg-ttl">Emergency hai?</div><div class="emg-sub">Ek tap — parents + ambulance alert</div></div>
+      <button class="emg-sos" onclick="showSOS()"><i class="ti ti-alert-triangle"></i> SOS</button>
+    </div>
+    <div class="q-med">
+      <div class="med-q" onclick="alert('108 — Ambulance dispatch ho rahi hai!')"><i class="ti ti-ambulance" style="font-size:24px;color:var(--red)"></i><div class="med-lbl">Ambulance</div><div class="med-sub2">108 direct</div></div>
+      <div class="med-q"><i class="ti ti-pill" style="font-size:24px;color:var(--blue)"></i><div class="med-lbl">Medicine</div><div class="med-sub2">Nearby pharmacy</div></div>
+    </div>
+    <div class="asec">
+      <div class="asec-head">🚔 Emergency Numbers — Vigyan Nagar, Kota</div>
+      <div id="emergencyNums"></div>
+      <div class="asec-head" style="margin-top:.5rem">👨‍⚕️ Nearby Doctors</div>
+      <div id="docList"></div>
+      <div class="asec-head" style="margin-top:.5rem">📞 Helplines</div>
+      <div id="helplines"></div>
+    </div>
+  </div>
+
+  <!-- SUGGESTION BOX -->
+  <div class="apage" id="ap-suggest">
+    <div class="sug-hero">
+      <div style="font-size:2rem;margin-bottom:.4rem">💡</div>
+      <div class="sug-hero-ttl">Suggestion Box</div>
+      <div class="sug-hero-sub">Tera feedback — hamara next update</div>
+      <div class="sug-anon-badge">🔒 100% Anonymous — owner bhi nahi dekh sakta</div>
+    </div>
+    <div class="sug-type-sel" id="sugTypes">
+      <button class="sug-type active" onclick="setSugType('App Feature',this)">App Feature</button>
+      <button class="sug-type" onclick="setSugType('PG Problem',this)">PG Problem</button>
+      <button class="sug-type" onclick="setSugType('Safety Issue',this)">Safety Issue</button>
+      <button class="sug-type" onclick="setSugType('Study Help',this)">Study Help</button>
+      <button class="sug-type" onclick="setSugType('Mental Health',this)">Mental Health</button>
+      <button class="sug-type" onclick="setSugType('Other',this)">Other</button>
+    </div>
+    <div class="sug-form">
+      <div class="sug-gender-note" id="sugGenderNote">🔒 Tumhara naam ya gender kisi ko nahi dikhega — bilkul safe hai</div>
+      <label class="sug-label">Apna suggestion likho:</label>
+      <textarea class="sug-ta" id="sugText" rows="4" placeholder="Kya improve karna chahte ho? Kya problem face ki? Freely likho..."></textarea>
+      <label class="sug-label">Priority kitni hai?</label>
+      <div style="display:flex;gap:8px;margin-bottom:.75rem">
+        <button class="sug-type active" id="pri-high" onclick="setPri('High',this)" style="flex:1">🔴 High</button>
+        <button class="sug-type" id="pri-med" onclick="setPri('Medium',this)" style="flex:1">🟡 Medium</button>
+        <button class="sug-type" id="pri-low" onclick="setPri('Low',this)" style="flex:1">🟢 Low</button>
+      </div>
+      <button class="sug-submit" onclick="submitSug()">Submit karo — anonymously 🔒</button>
+    </div>
+    <div class="sug-past" id="sugPast">
+      <div class="asec-head" style="padding:0;margin-bottom:.75rem">Previous suggestions — status</div>
+    </div>
+  </div>
+
+  <!-- NOTES PREVIEW -->
+  <div class="apage" id="ap-notes">
+    <div class="notes-hero">
+      <div style="font-size:2rem;margin-bottom:.4rem">📚</div>
+      <div class="notes-hero-ttl">Study Material</div>
+      <div class="notes-hero-sub">3 chapters free — Tarun sir ke notes</div>
+    </div>
+    <div class="notes-tabs">
+      <button class="ntab active" onclick="setSubject('physics',this)">⚛️ Physics</button>
+      <button class="ntab" onclick="setSubject('chemistry',this)">🧪 Chemistry</button>
+      <button class="ntab" onclick="setSubject('biology',this)">🧬 Biology</button>
+      <button class="ntab" onclick="setSubject('maths',this)">📐 Maths</button>
+    </div>
+    <div class="notes-content" id="notesContent"></div>
+    <div class="notes-cta">
+      <div class="notes-cta-ttl">Poora syllabus chahiye?</div>
+      <div class="notes-cta-sub">Pro plan mein sab chapters + MCQs + solutions</div>
+      <button class="notes-cta-btn" onclick="alert('Payment gateway coming soon! Abhi free chapters enjoy karo.')">Pro mein upgrade karo →</button>
+    </div>
+  </div>
+
+  <!-- GIRLS SAFETY -->
+  <div class="apage" id="ap-safety">
+    <div class="saf-hero">
+      <div style="font-size:2.5rem;margin-bottom:.4rem">🛡️</div>
+      <div style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800">Girls Safety Hub</div>
+      <div style="font-size:12px;opacity:.75;margin-top:4px">Sirf tumhare liye — safe, private, powerful</div>
+    </div>
+    <div class="asec">
+      <div class="asec-head">Quick safety tools</div>
+      <div class="saf-grid">
+        <div class="saf-tool" onclick="fakeCall()"><div class="st-icon">📞</div><div class="st-ttl">Fake Call</div><div class="st-sub">10 sec mein call simulate karo</div></div>
+        <div class="saf-tool" onclick="alert('SOS Shake active! Phone 3 baar hilao — turant parents alert.')"><div class="st-icon">📳</div><div class="st-ttl">SOS Shake</div><div class="st-sub">Phone hilao — turant alert</div></div>
+        <div class="saf-tool" onclick="showSOS()"><div class="st-icon">🆘</div><div class="st-ttl">Emergency SOS</div><div class="st-sub">Parents + 112 instant</div></div>
+        <div class="saf-tool" onclick="alert('Safe Route: Well-lit rasta — Talwandi Chowk → Vigyan Nagar. Police chowki 0.3km.')"><div class="st-icon">🗺️</div><div class="st-ttl">Safe Route</div><div class="st-sub">Well-lit rasta suggest karo</div></div>
+      </div>
+      <div class="asec-head" style="margin-top:1rem">Emergency contacts — Vigyan Nagar</div>
+      <div id="girlsEmergency"></div>
+      <div class="asec-head" style="margin-top:.5rem">Trusted contacts</div>
+      <div class="acard">
+        <div class="trusted-item"><span>👩 Maa</span><span style="color:var(--green);font-size:12px">✓ Added</span></div>
+        <div class="trusted-item"><span>👨 Papa</span><span style="color:var(--green);font-size:12px">✓ Added</span></div>
+        <div class="trusted-item"><span>👭 Saheli / Didi</span><span style="color:var(--app-muted);font-size:12px;cursor:pointer">+ Add karo</span></div>
+      </div>
+      <div class="asec-head" style="margin-top:.5rem">Safety tips</div>
+      <div class="acard">
+        <div class="tip-item">🌙 Raat 9 baje ke baad akele mat jao — buddy system use karo</div>
+        <div class="tip-item">📍 Bahar jaate waqt location share karo trusted contact se</div>
+        <div class="tip-item">📱 Phone hamesha 30%+ charge rakho</div>
+        <div class="tip-item">🚔 Vigyan Nagar police chowki — 0744-2450999</div>
+        <div class="tip-item">📞 Women helpline — 1091 (24/7 free)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIVACY -->
+  <div class="apage" id="ap-privacy">
+    <div class="priv-hero"><div class="priv-ttl">Privacy Policy 🔒</div><div class="priv-date">January 2026</div></div>
+    <div class="asec">
+      <div class="priv-sec"><div class="priv-h">1. Hum kya collect karte hain</div><div class="priv-txt">Sirf naam, gender, email. Koi bhi sensitive data — chat content — store nahi hota.</div></div>
+      <div class="priv-sec"><div class="priv-h">2. Chat 100% Anonymous</div><div class="priv-txt">Mental health chat sessions koi nahi padh sakta — na owner, na third party. Sirf tum aur AI.</div></div>
+      <div class="priv-sec"><div class="priv-h">3. Suggestion Box Privacy</div><div class="priv-txt">Suggestions anonymously store hote hain. Owner sirf category aur text dekhta hai — koi naam, gender, ID nahi. AI auto-reply generate karta hai.</div></div>
+      <div class="priv-sec"><div class="priv-h">4. Referral</div><div class="priv-txt">Referral earnings tera personal maamla hai. App owner ki koi zimmedari nahi ki tu paise kahan use kare.</div></div>
+      <div class="priv-sec"><div class="priv-h">5. Data delete karna</div><div class="priv-txt">Account delete karo — 7 din mein sab permanently delete.</div></div>
+      <div class="priv-sec"><div class="priv-h">6. Contact</div><div class="priv-txt">privacy@kotanest.in — 24 ghante mein reply.</div></div>
+      <button class="btn-full" style="margin-top:1rem" onclick="agoto('home')">Samajh gaya ✓</button>
+    </div>
+  </div>
+
+  <!-- SOS MODAL -->
+  <div class="overlay" id="sosModal" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="modal-box">
+      <div style="font-size:2.5rem;margin-bottom:.5rem">🚨</div>
+      <h3>Emergency Alert</h3>
+      <p>Parents aur emergency contacts ko turant alert bheja jayega. Ambulance dispatch hogi.</p>
+      <button class="sos-confirm" onclick="triggerSOS()">Haan — Alert bhejo abhi</button>
+      <button class="sos-cancel" onclick="document.getElementById('sosModal').classList.remove('open')">Cancel karo</button>
+    </div>
+  </div>
+
+  <!-- FAKE CALL MODAL -->
+  <div class="overlay" id="fakeCallModal">
+    <div class="modal-box">
+      <div style="font-size:3rem;animation:ring .5s ease infinite alternate;display:block;margin-bottom:.5rem">📱</div>
+      <div style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:var(--app-text)">Maa 📞</div>
+      <div style="font-size:13px;color:var(--app-muted);margin-bottom:1.25rem">+91 98760 XXXXX</div>
+      <div style="display:flex;gap:1rem;justify-content:center">
+        <button style="background:var(--red);color:#fff;border:none;border-radius:50%;width:56px;height:56px;font-size:1.5rem;cursor:pointer" onclick="document.getElementById('fakeCallModal').classList.remove('open')">❌</button>
+        <button style="background:var(--green);color:#fff;border:none;border-radius:50%;width:56px;height:56px;font-size:1.5rem;cursor:pointer" onclick="document.getElementById('fakeCallModal').classList.remove('open')">✅</button>
+      </div>
+    </div>
+  </div>
+  @keyframes ring{from{transform:rotate(-10deg)}to{transform:rotate(10deg)}}
+
+  <!-- BOTTOM NAV -->
+  <nav class="app-bnav">
+    <button class="bn active" id="bn-home" onclick="agoto('home')"><i class="ti ti-home"></i><span>Home</span></button>
+    <button class="bn" id="bn-chat" onclick="agoto('chat')"><i class="ti ti-message-circle"></i><span>Saathi</span></button>
+    <button class="bn" id="bn-suggest" onclick="agoto('suggest')"><i class="ti ti-bulb"></i><span>Suggest</span></button>
+    <button class="bn" id="bn-notes" onclick="agoto('notes')"><i class="ti ti-book"></i><span>Notes</span></button>
+    <button class="bn" id="bn-medical" onclick="agoto('medical')"><i class="ti ti-stethoscope"></i><span>Medical</span></button>
+  </nav>
+</div>
 
 <script>
-const slider = document.getElementById('refSlider');
-const countEl = document.getElementById('refCount');
-const amtEl = document.getElementById('earningAmt');
-slider.addEventListener('input', function(){
-  const n = parseInt(this.value);
-  countEl.textContent = n + ' dost';
-  amtEl.textContent = '₹' + (n * 200).toLocaleString('en-IN');
-});
+// ======= DATA =======
+let user={name:'',gender:'',ref:'',days:1,mood:'😊'};
+let tone='bhai',awaitingReply=false,sugType='App Feature',sugPri='High';
+
+const tiffins=[
+  {name:'Shree Tiffin Service',emoji:'🍛',type:'veg',delivery:true,price:70,rating:4.6,meta:'Talwandi • Dal, Sabzi, Roti, Rice'},
+  {name:'Maa ki Rasoi',emoji:'🫕',type:'veg',delivery:true,price:65,rating:4.8,meta:'Vigyan Nagar • Ghar jaisa khana'},
+  {name:'Rajasthani Dhaba',emoji:'🍽️',type:'nonveg',delivery:false,price:90,rating:4.3,meta:'Near Allen • Dal Baati, Laal Maas'},
+  {name:'Healthy Bites',emoji:'🥗',type:'veg',delivery:true,price:85,rating:4.5,meta:'Jawahar Nagar • Protein rich meals'},
+  {name:'Punjab da Dhaba',emoji:'🫓',type:'nonveg',delivery:true,price:95,rating:4.4,meta:'DC Colony • Butter Paratha + Chicken'},
+  {name:'Satvik Bhojan',emoji:'🌿',type:'veg',delivery:false,price:60,rating:4.7,meta:'Mahaveer Nagar • Pure satvik'},
+];
+
+const emergencyNums=[
+  {icon:'🚔',name:'Vigyan Nagar Police Chowki',num:'0744-2450999',tag:'24/7',color:'var(--blue)'},
+  {icon:'👮‍♀️',name:'Women Helpline (Mahila Thana)',num:'1091',tag:'Free • 24/7',color:'#ec4899'},
+  {icon:'🚨',name:'SP Kota (Senior)',num:'0744-2500100',tag:'SP Office',color:'var(--red)'},
+  {icon:'🚨',name:'DSP Kota',num:'0744-2500200',tag:'DSP Office',color:'var(--red)'},
+  {icon:'🚑',name:'Ambulance',num:'108',tag:'Free • Emergency',color:'var(--green)'},
+  {icon:'🔥',name:'Fire Brigade',num:'101',tag:'Emergency',color:'var(--or)'},
+];
+
+const coachingNums=[
+  {icon:'📚',name:'Allen Career Institute',num:'0744-2757575',tag:'Helpdesk'},
+  {icon:'📚',name:'Unacademy Kota',num:'1800-120-5670',tag:'Toll Free'},
+  {icon:'📚',name:'Motion Education',num:'0744-2777777',tag:'Helpdesk'},
+  {icon:'📚',name:'Extramarks Kota',num:'0120-4160397',tag:'Support'},
+  {icon:'📚',name:'Resonance',num:'0744-2777744',tag:'Helpdesk'},
+  {icon:'📚',name:'FIITJEE Kota',num:'0744-2778899',tag:'Helpdesk'},
+];
+
+const helplines=[
+  {icon:'🧠',name:'iCall — TISS Mental Health',num:'9152987821',sub:'Mon–Sat 8am–10pm',free:'Free • Confidential'},
+  {icon:'💛',name:'Vandrevala Foundation',num:'1860-2662-345',sub:'24/7',free:'Free • Hindi+English'},
+  {icon:'👮‍♀️',name:'Women Helpline',num:'1091',sub:'24/7',free:'Free • Emergency'},
+  {icon:'🆘',name:'National Emergency',num:'112',sub:'24/7',free:'Police + Fire + Ambulance'},
+];
+
+const doctors=[
+  {name:'Dr. Suresh Sharma',spec:'General Physician',emoji:'👨‍⚕️',dist:'0.8 km',avail:'Available now',fee:'₹200'},
+  {name:'Dr. Priya Agarwal',spec:'Psychiatrist / Counselor',emoji:'👩‍⚕️',dist:'1.2 km',avail:'5pm–8pm',fee:'₹300'},
+  {name:'Dr. Amit Jain',spec:'Fever Specialist',emoji:'👨‍⚕️',dist:'0.5 km',avail:'Available now',fee:'₹150'},
+];
+
+const girlsEmergNums=[
+  {icon:'👮‍♀️',name:'Women Helpline',num:'1091',free:'Free 24/7'},
+  {icon:'🚔',name:'Vigyan Nagar Police',num:'0744-2450999',free:'24/7'},
+  {icon:'💜',name:'Sakhi One Stop Centre',num:'181',free:'Free • Domestic violence'},
+  {icon:'📱',name:'Cyber Crime Helpline',num:'1930',free:'Online harassment'},
+];
+
+const subjectData={
+  physics:{
+    subject:'Physics — Talk With Physics (Tarun Sir)',
+    free:3,
+    chapters:[
+      {num:'Ch 0',name:'Mathematical Tools',desc:'Trigonometry, vectors, calculus — sabse pehle yeh samjho.',topics:['Trigonometry','Vectors','Basic Calculus','Graphs'],pages:'18 pages',free:true},
+      {num:'Ch 1',name:'Units, Dimensions & Measurement',desc:'CBSE + JEE dono ke liye — dimensional analysis tricks.',topics:['SI Units','Dimensional Formula','Error Analysis','Significant Figures'],pages:'22 pages',free:true},
+      {num:'Ch 2',name:'Motion in a Straight Line',desc:'Kinematics — graphs se saari problems solve karo.',topics:['Displacement','Velocity','Acceleration','Graphs'],pages:'28 pages',free:true},
+      {num:'Ch 3',name:'Motion in a Plane',desc:'2D motion, projectile, circular — step by step.',topics:['Projectile','Relative Motion','Circular'],pages:'24 pages',free:false},
+      {num:'Ch 4',name:'Laws of Motion',desc:'Newton ke 3 laws — real life examples ke saath.',topics:['Newton Laws','Friction','Pseudo Force'],pages:'32 pages',free:false},
+      {num:'Ch 5',name:'Work, Energy & Power',desc:'Conservation laws — JEE mein sabse zyada aata hai.',topics:['Work','KE','PE','Conservation'],pages:'26 pages',free:false},
+    ]
+  },
+  chemistry:{
+    subject:'Talk With Chemistry — by Tarun Kumar, M.Sc. Physics',
+    free:3,
+    chapters:[
+      {num:'Ch 1',name:'Mole Concept & Stoichiometry',
+       desc:'Bhai, chemistry ka sabse pehla aur important chapter. Ek baar mole concept clear hua toh poora chemistry easy lagegi. Main tumhe story ki tarah samjhaunga.',
+       detail:'🔑 KEY CONCEPT:\nMole ek counting unit hai — jaise dozen mein 12 hote hain, ek mole mein 6.022×10²³ particles hote hain. Yeh Avogadro number hai.\n\n📌 IMPORTANT FORMULAS:\n• Moles = Given mass / Molar mass\n• Moles = Volume(L) / 22.4 (STP pe)\n• Molarity(M) = Moles of solute / Volume(L)\n• Mole fraction = n_A / (n_A + n_B)\n\n🎯 IIT-JEE TRICK:\nLimiting reagent wo hai jiska mole ratio kam ho. Pehle sab ko moles mein convert karo, phir ratio se compare karo.\n\n💡 NEET TIP:\nConcentration terms yaad karo — Molarity, Molality, Normality, Mole fraction — NEET mein direct numerical aata hai.\n\n✍️ SOLVED EXAMPLE:\n10g of NaOH (MW=40) ko 500mL water mein dissolve kiya. Molarity?\nMoles of NaOH = 10/40 = 0.25 mol\nVolume = 500mL = 0.5L\nMolarity = 0.25/0.5 = 0.5 M ✓',
+       topics:['Mole Concept','Avogadro Number','Stoichiometry','Limiting Reagent','Molarity','Mole Fraction'],pages:'24 pages',free:true,
+       pyqs:'JEE 2019: Limiting reagent numerical | NEET 2020: Mole fraction calculation | JEE Adv 2021: Multi-step stoichiometry'},
+      {num:'Ch 2',name:'Atomic Structure',
+       desc:'Atom ke andar kya hota hai — Bohr se quantum tak. JEE Advanced mein quantum numbers se seedha numerical aata hai. Tarun sir ka unique visual approach.',
+       detail:'🔑 KEY CONCEPT:\nAtom mein nucleus (protons+neutrons) aur electrons hote hain. Electrons fixed orbits mein nahi, orbitals mein hote hain.\n\n📌 QUANTUM NUMBERS:\n• n (Principal): Shell — 1,2,3,4...\n• l (Azimuthal): Subshell — 0 to (n-1)\n• m (Magnetic): Orbital orientation — -l to +l\n• s (Spin): +½ or -½\n\n🎯 IIT-JEE TRICK:\nElectronic config mein Aufbau + Pauli + Hund — teenon rules ek saath apply karo.\nSpecial cases: Cr=[Ar]3d⁵4s¹, Cu=[Ar]3d¹⁰4s¹ — half/full filled extra stable!\n\n💡 NEET TIP:\nHydrogen spectrum — Lyman(UV), Balmer(visible), Paschen(IR) — directly yaad karo series names.\n\n✍️ SOLVED EXAMPLE:\n3rd shell mein maximum electrons?\nn=3, l=0,1,2 → 2+6+10 = 18 electrons ✓',
+       topics:['Bohr Model','Quantum Numbers','Electronic Configuration','Aufbau Principle','Hydrogen Spectrum','Orbital Shapes'],pages:'28 pages',free:true,
+       pyqs:'JEE 2020: Quantum numbers combination | NEET 2021: Electronic config exceptions | JEE Adv 2022: Photoelectric effect'},
+      {num:'Ch 3',name:'Chemical Bonding & Molecular Structure',
+       desc:'Bond kyon banta hai, kaise banta hai — VSEPR se molecular shape tak. Tarun sir ke diagrams se ek baar mein clear ho jaayega.',
+       detail:'🔑 KEY CONCEPT:\nAtoms bond isliye banate hain kyunki stable (noble gas config) banana chahte hain.\n\n📌 TYPES OF BONDS:\n• Ionic: e⁻ transfer — high MP, conducts in solution\n• Covalent: e⁻ sharing — low MP, non-conductor\n• Coordinate: Dono e⁻ ek atom deta hai (Lewis acid-base)\n\n🎯 VSEPR SHAPES:\nBP=2, LP=0 → Linear (180°)\nBP=3, LP=0 → Trigonal Planar (120°)\nBP=4, LP=0 → Tetrahedral (109.5°)\nBP=3, LP=1 → Pyramidal (107°)\nBP=2, LP=2 → Bent (104.5°)\n\n🎯 IIT-JEE TRICK:\nHybridization = ½(V + M - C + A)\nV=valence e⁻, M=monovalent atoms, C=cation charge, A=anion charge\n\n💡 NEET TIP:\nHydrogen bond — F-H...F strongest, O-H...O in water explains high BP.\n\n✍️ SOLVED EXAMPLE:\nNH₃ ki shape?\nN: 5 valence e⁻, 3 H atoms bond karte hain\nBP=3, LP=1 → Trigonal Pyramidal, bond angle 107° ✓',
+       topics:['Ionic Bond','Covalent Bond','VSEPR Theory','Hybridization','Molecular Orbital Theory','Hydrogen Bond','Dipole Moment'],pages:'32 pages',free:true,
+       pyqs:'JEE 2021: MOT of O₂ | NEET 2022: VSEPR shapes | JEE Adv 2023: Bond order calculation'},
+      {num:'Ch 4',name:'Thermodynamics & Thermochemistry',
+       desc:'Energy ka khel — system, surroundings, enthalpy, entropy. JEE mein numerical aur NEET mein concept based.',
+       topics:['System & Surroundings','Enthalpy ΔH','Entropy ΔS','Gibbs Energy ΔG','Hess Law','Bond Enthalpy'],pages:'30 pages',free:false,
+       pyqs:'JEE 2022: Gibbs energy spontaneity | NEET 2021: Hess law numerical'},
+      {num:'Ch 5',name:'Chemical Equilibrium & Ionic Equilibrium',
+       desc:'Le Chatelier, Kp, Kc, pH, buffer — IIT mein sabse zyada questions isi chapter se.',
+       topics:['Kp & Kc','Le Chatelier Principle','Degree of Dissociation','pH Scale','Buffer Solutions','Solubility Product'],pages:'34 pages',free:false,
+       pyqs:'JEE 2023: Kp Kc relation | NEET 2022: pH buffer calculation'},
+    ]
+  },
+  biology:{
+    subject:'Talk With Biology — by Tarun Kumar, M.Sc. Physics',
+    free:3,
+    chapters:[
+      {num:'Ch 1',name:'The Living World & Biological Classification',
+       desc:'NEET ka pehla chapter — taxonomy aur 5 kingdom system. Tarun sir ki memory tricks se ek baar padho, kabhi nahi bhuloge.',
+       detail:'🔑 KEY CONCEPT:\nSaari living beings ko classify karne ke liye taxonomy use karte hain.\n\n📌 TAXONOMIC HIERARCHY:\nKing Philip Came Over For Good Soup\n→ Kingdom → Phylum → Class → Order → Family → Genus → Species\n\n🎯 5 KINGDOM SYSTEM (Whittaker):\n• Monera: Prokaryotes (bacteria, cyanobacteria)\n• Protista: Unicellular eukaryotes (amoeba, paramecium)\n• Fungi: Heterotrophs, cell wall = chitin\n• Plantae: Autotrophs, cell wall = cellulose\n• Animalia: Heterotrophs, no cell wall\n\n💡 NEET TRICK:\nVirus → Non-cellular → Kingdom mein nahi aata! NEET mein yeh trap question aata hai.\n\n📌 BINOMIAL NOMENCLATURE (Linnaeus):\n• Genus naam capital letter se → Homo\n• Species naam small letter se → sapiens\n• Italic mein likho ya underline karo\n\n✍️ NEET EXAMPLE:\nMango ka scientific naam: Mangifera indica\nM capital → Genus | indica small → Species ✓\n\n🎯 NEET PATTERN:\nHar saal 2-3 questions taxonomy se aate hain. Characters of each kingdom yaad karo.',
+       topics:['Taxonomy','Binomial Nomenclature','5 Kingdom Classification','Monera','Protista','Fungi','Virus vs Living'],pages:'22 pages',free:true,
+       pyqs:'NEET 2022: Whittaker classification | NEET 2021: Taxonomic categories | NEET 2023: Nomenclature rules'},
+      {num:'Ch 2',name:'Plant Kingdom — Cryptogams to Phanerogams',
+       desc:'Algae se Angiosperms tak — NEET mein 4-5 marks guaranteed. Diagrams ke saath Tarun sir ka explanation ekdum clear.',
+       detail:'🔑 KEY CONCEPT:\nPlant kingdom mein evolution of complexity — thallus se complex body tak.\n\n📌 CLASSIFICATION:\n\nALGAE:\n• Chlorophyceae (Green): Chlamydomonas, Ulva — Chl a+b\n• Phaeophyceae (Brown): Fucus, Kelp — Chl a+c, fucoxanthin\n• Rhodophyceae (Red): Porphyra — Chl a+d, r-phycoerythrin\n\nBRYOPHYTA (Amphibians of plant world):\n• No vascular tissue\n• Dominant phase: Gametophyte\n• Example: Funaria (moss), Marchantia (liverwort)\n\nPTERIDOPHYTA (First vascular plants):\n• No seeds, spore reproduction\n• Dominant phase: Sporophyte\n• Example: Ferns, Selaginella\n\n💡 NEET TRICK:\n"Algae ko Phyta nahi bolte!" — Chlorophyta, Phaeophyta, Rhodophyta → Divisions hain\n\n🎯 GYMNOSPERM vs ANGIOSPERM:\nGymno = Naked seeds (Pine, Cycas)\nAngios = Enclosed seeds (Mango, Rose)',
+       topics:['Algae Types','Bryophyta','Pteridophyta','Gymnosperm','Angiosperm','Alternation of Generation','Dominant Phase'],pages:'26 pages',free:true,
+       pyqs:'NEET 2023: Bryophyta characters | NEET 2022: Algae pigments | NEET 2021: Pteridophyta features'},
+      {num:'Ch 3',name:'Animal Kingdom — Classification & Characters',
+       desc:'8-10 marks NEET mein sirf is chapter se. Tarun sir ki table format mein padho — ek ghante mein poora chapter ready.',
+       detail:'🔑 KEY CONCEPT:\nAnimals ko phyla mein classify karte hain — characters ke basis pe.\n\n📌 BASIS OF CLASSIFICATION:\n• Symmetry: Radial vs Bilateral\n• Coelom: Acoelomate, Pseudocoelomate, Coelomate\n• Segmentation: Present / Absent\n• Notochord: Present / Absent\n\n📌 IMPORTANT PHYLA:\n\nPorifera (Sponges):\n• Acoelomate, Asymmetry\n• Canal system, choanocytes\n• Ex: Sycon, Spongilla\n\nCoelenterata/Cnidaria:\n• Radial symmetry, Cnidoblasts/Nematocysts\n• Ex: Hydra, Obelia, Aurelia(jellyfish)\n\nPlatyhelminthes:\n• Dorsoventrally flattened, acoelomate\n• Ex: Tapeworm(Taenia), Liver fluke(Fasciola)\n\nNematoda:\n• Pseudocoelomate, cylindrical\n• Ex: Ascaris, Wuchereria(filarial)\n\nAnnelida:\n• True coelom, metameric segmentation\n• Ex: Earthworm(Pheretima), Leech(Hirudinaria)\n\nArthropoda (Largest phylum!):\n• Exoskeleton chitin, jointed appendages\n• Ex: Cockroach, Butterfly, Prawn\n\nMollusca:\n• Soft body, mantle\n• Ex: Pila(apple snail), Octopus, Sepia\n\n💡 NEET TRICK:\n"Please Come Over For Awesome Meals" = Porifera, Cnidaria, Platyhelminthes, Nematoda, Annelida, Mollusca, Arthropoda',
+       topics:['Basis of Classification','Porifera','Coelenterata','Platyhelminthes','Nematoda','Annelida','Arthropoda','Mollusca','Echinodermata','Chordata'],pages:'30 pages',free:true,
+       pyqs:'NEET 2023: Arthropoda features | NEET 2022: Coelom types | NEET 2021: Phyla identification'},
+      {num:'Ch 4',name:'Cell — The Unit of Life',
+       desc:'Cell organelles — structure, function, diagram. NEET ka most scoring topic. 6-8 marks guaranteed.',
+       topics:['Prokaryotic Cell','Eukaryotic Cell','Cell Membrane','Mitochondria','Chloroplast','Ribosome','Nucleus','Cell Division'],pages:'28 pages',free:false,
+       pyqs:'NEET 2022: Organelle function | NEET 2023: Mitosis vs Meiosis'},
+      {num:'Ch 5',name:'Biomolecules — Carbohydrates, Proteins, Nucleic Acids',
+       desc:'Biochemistry ka foundation — JEE aur NEET dono ke liye essential.',
+       topics:['Carbohydrates','Proteins & Amino Acids','Lipids','Nucleic Acids','Enzymes','Metabolism'],pages:'26 pages',free:false,
+       pyqs:'NEET 2021: Enzyme properties | NEET 2022: DNA structure'},
+    ]
+  },
+  maths:{
+    subject:'Talk With Mathematics — by Tarun Kumar, M.Sc. Physics',
+    free:3,
+    chapters:[
+      {num:'Ch 1',name:'Quadratic Equations & Complex Numbers',
+       desc:'IIT-JEE ka foundation — quadratics aur complex numbers. Tarun sir ke visualization tricks se koi bhi numerical 2 minute mein solve hogi.',
+       detail:'🔑 KEY CONCEPT:\nQuadratic equation: ax² + bx + c = 0\nRoots: α = (-b+√D)/2a, β = (-b-√D)/2a\nD = b²-4ac (Discriminant)\n\n📌 NATURE OF ROOTS:\n• D > 0: Two distinct real roots\n• D = 0: Two equal real roots\n• D < 0: Two complex roots (conjugate pair)\n\n📌 VIETA\'s FORMULAS:\n• α + β = -b/a (Sum of roots)\n• αβ = c/a (Product of roots)\n\n🎯 IIT-JEE TRICK:\nQuadratic ke roots ka sum aur product pata hai toh equation seedha likho:\nx² - (α+β)x + αβ = 0\n\n📌 COMPLEX NUMBERS:\nz = a + ib, jahan i = √(-1), i² = -1\n|z| = √(a²+b²) (Modulus)\nArg(z) = tan⁻¹(b/a) (Argument)\nConjugate: z̄ = a - ib\n\n💡 IIT TRICK:\ni⁴ᵏ = 1, i⁴ᵏ⁺¹ = i, i⁴ᵏ⁺² = -1, i⁴ᵏ⁺³ = -i\n\n✍️ SOLVED EXAMPLE:\nIf α,β roots of x²-5x+6=0, find α²+β²\nα+β = 5, αβ = 6\nα²+β² = (α+β)² - 2αβ = 25-12 = 13 ✓',
+       topics:['Quadratic Equation','Nature of Roots','Vieta Formulas','Complex Numbers','Argand Plane','Modulus & Argument','De Moivre Theorem','Cube Roots of Unity'],pages:'28 pages',free:true,
+       pyqs:'JEE 2022: Complex number locus | JEE 2021: Quadratic inequality | JEE Adv 2023: Roots on Argand plane'},
+      {num:'Ch 2',name:'Sequences, Series & Progressions',
+       desc:'AP, GP, HP aur special series — IIT mein har saal 2-3 questions. Tarun sir ki shortcut method se ek bhi sum miss nahi hoga.',
+       detail:'🔑 KEY CONCEPT:\nAP (Arithmetic Progression): Common difference d\nGP (Geometric Progression): Common ratio r\nHP (Harmonic Progression): Reciprocals mein AP\n\n📌 AP FORMULAS:\n• nth term: aₙ = a + (n-1)d\n• Sum of n terms: Sₙ = n/2[2a + (n-1)d] = n/2[a+l]\n• AM between a,b = (a+b)/2\n\n📌 GP FORMULAS:\n• nth term: aₙ = arⁿ⁻¹\n• Sum: Sₙ = a(rⁿ-1)/(r-1) if r≠1\n• Sum to infinity: S∞ = a/(1-r) if |r|<1\n• GM between a,b = √(ab)\n\n🎯 IIT-JEE TRICK:\nAM ≥ GM ≥ HM — equality tab jab sab terms equal hon.\nAM × HM = GM² (Always!)\n\n📌 SPECIAL SERIES:\n• Σn = n(n+1)/2\n• Σn² = n(n+1)(2n+1)/6\n• Σn³ = [n(n+1)/2]²\n\n✍️ SOLVED EXAMPLE:\n1+2+3+...+100 = 100×101/2 = 5050 ✓\nIIT-JEE 2019 mein yahi concept aaya tha!',
+       topics:['Arithmetic Progression','Geometric Progression','Harmonic Progression','AM GM HM Inequality','Special Series Σn Σn² Σn³','Telescoping Series'],pages:'26 pages',free:true,
+       pyqs:'JEE 2023: AGP sum | JEE 2022: AM-GM inequality | JEE Adv 2021: Telescoping series'},
+      {num:'Ch 3',name:'Trigonometry — Identities, Equations & Inverse',
+       desc:'IIT aur NEET dono mein har saal aata hai. Tarun sir ka "unit circle" approach — ek baar samjho toh sab identity khud ban jaayegi.',
+       detail:'🔑 KEY CONCEPT:\nTrigonometry ka matlab hai triangle measurement. Par IIT mein yeh sirf triangle nahi — pure algebra hai.\n\n📌 FUNDAMENTAL IDENTITIES:\n• sin²θ + cos²θ = 1\n• 1 + tan²θ = sec²θ\n• 1 + cot²θ = cosec²θ\n\n📌 COMPOUND ANGLES:\n• sin(A±B) = sinA cosB ± cosA sinB\n• cos(A±B) = cosA cosB ∓ sinA sinB\n• tan(A±B) = (tanA ± tanB)/(1 ∓ tanA tanB)\n\n🎯 IIT-JEE TRICK:\nProduct to Sum:\n2sinA cosB = sin(A+B) + sin(A-B)\n2cosA cosB = cos(A-B) + cos(A+B)\n2sinA sinB = cos(A-B) - cos(A+B)\n\n📌 GENERAL SOLUTION:\n• sinθ = sinα → θ = nπ + (-1)ⁿα\n• cosθ = cosα → θ = 2nπ ± α\n• tanθ = tanα → θ = nπ + α\n\n📌 INVERSE TRIG:\n• sin⁻¹x + cos⁻¹x = π/2\n• tan⁻¹x + cot⁻¹x = π/2\n• tan⁻¹x + tan⁻¹y = tan⁻¹[(x+y)/(1-xy)] if xy<1\n\n✍️ SOLVED EXAMPLE:\nProve: sin3A = 3sinA - 4sin³A\nUse sin(2A+A) = sin2A·cosA + cos2A·sinA\n= 2sinAcos²A + (1-2sin²A)sinA\n= 2sinA(1-sin²A) + sinA - 2sin³A\n= 3sinA - 4sin³A ✓',
+       topics:['Basic Identities','Compound Angles','Multiple & Sub-Multiple Angles','Product to Sum','Trigonometric Equations','General Solution','Inverse Trigonometry','Heights & Distances'],pages:'32 pages',free:true,
+       pyqs:'JEE 2023: Trig equation general solution | JEE Adv 2022: Inverse trig | JEE 2021: Heights & distances'},
+      {num:'Ch 4',name:'Straight Lines & Circles',
+       desc:'Coordinate geometry ka base — IIT mein har saal 3-4 questions.',
+       topics:['Slope & Line Equations','Distance Formulas','Family of Lines','Circle Standard Forms','Tangent & Normal','Radical Axis'],pages:'30 pages',free:false,
+       pyqs:'JEE 2022: Line & circle intersection | JEE Adv 2023: Family of circles'},
+      {num:'Ch 5',name:'Limits, Continuity & Differentiability',
+       desc:'Calculus ki neev — JEE Advanced ka favourite topic.',
+       topics:['Limits','L\'Hospital Rule','Continuity','Differentiability','Derivatives','Chain Rule'],pages:'34 pages',free:false,
+       pyqs:'JEE 2021: Differentiability check | JEE Adv 2022: Limit evaluation'},
+    ]
+  }
+};
+
+const sugPastData=[
+  {cat:'App Feature',text:'PG listing mein photos add karo',status:'done',reply:'Yeh feature next update mein aa raha hai! PG owners ko photo upload ka option denge.',time:'2 months ago'},
+  {cat:'Safety Issue',text:'Girls ke liye raat ki cab safe nahi lagti Kota mein',status:'progress',reply:'Hum Kota cab services se baat kar rahe hain. Safe cab feature plan mein hai.',time:'1 month ago'},
+  {cat:'Study Help',text:'Chemistry ke notes bhi chahiye',status:'new',reply:'Noted! Chemistry Vol 1 next quarter mein release hoga.',time:'2 weeks ago'},
+];
+
+// =============================================
+// SAATHI — POWERED BY CLAUDE API
+// =============================================
+// ⚠️  APNI KEY YAHAN DAALO — SIRF EK JAGAH
+const CLAUDE_API_KEY = 'YOUR_API_KEY_HERE';
+// =============================================
+
+let tone = 'bhai', awaitingReply = false;
+let chatHistory = []; // full conversation history
+
+const SYSTEM_PROMPTS = {
+  bhai: `Tu KotaNest ka "Saathi" hai — Kota mein padhne wale JEE/NEET students ka AI dost. Tu ek bade bhai ki tarah baat karta hai — casual, warm, funny kabhi kabhi, aur genuinely helpful.
+
+PERSONALITY:
+- Hinglish mein baat kar (Hindi + English mix) — jaise real Kota student karta hai
+- Bhai/yaar tone — never formal
+- Judgment bilkul nahi
+- Short replies (2-4 lines max) — students ke paas time nahi
+
+ACADEMIC KNOWLEDGE — Class 11 & 12 full syllabus:
+
+PHYSICS: Mechanics (Newton's laws, kinematics, work-energy, rotation, SHM, waves), Thermodynamics (laws, Carnot, entropy, heat engines), Electrostatics (Coulomb, Gauss, capacitors), Current Electricity (Ohm's law, Kirchhoff, Wheatstone), Magnetism (Biot-Savart, Ampere, EMI, AC circuits), Optics (reflection, refraction, lenses, wave optics, diffraction), Modern Physics (photoelectric, Bohr model, radioactivity, semiconductors)
+
+CHEMISTRY: Physical (mole concept, stoichiometry, thermodynamics, equilibrium, electrochemistry, kinetics, solutions), Inorganic (periodic table, chemical bonding, p-block, d-block, coordination compounds), Organic (IUPAC naming, isomerism, GOC, hydrocarbons, alcohols, aldehydes, ketones, carboxylic acids, amines, biomolecules, polymers)
+
+MATHEMATICS: Algebra (sets, relations, complex numbers, quadratic, progressions, binomial, permutations), Trigonometry (ratios, identities, inverse trig, height-distance), Coordinate Geometry (lines, circles, parabola, ellipse, hyperbola), Calculus (limits, continuity, differentiation, integration, differential equations), Vectors & 3D, Probability & Statistics
+
+BIOLOGY (NEET): Cell biology (cell division, biomolecules), Genetics (Mendel, DNA replication, transcription, translation), Plant physiology (photosynthesis, respiration, plant growth), Human physiology (digestion, respiration, circulation, excretion, nervous system, endocrine, reproduction), Ecology (ecosystems, biodiversity, environment), Evolution, Microbes
+
+RULES FOR ACADEMIC HELP:
+1. Concept pehle explain kar — simple language mein
+2. Formula dena — clear format mein
+3. Real example ya analogy use kar
+4. Agar numericals hai toh step-by-step solve kar
+5. JEE/NEET context mein batao — "yeh topic JEE mein aise aata hai"
+
+MENTAL HEALTH RULES:
+- Pehle sun, phir suggest kar
+- Kota pressure samjhta hai — validate kar
+- Kabhi dismiss mat kar feelings ko
+- Agar serious problem lage toh professional help suggest kar gently
+
+Har reply mein ek follow-up question poochh — conversation aage badhao.`,
+
+  didi: `Tu KotaNest ki "Saathi Didi" hai — Kota mein padhne wali JEE/NEET girls ki AI dost. Tu ek badi didi ki tarah baat karti hai — warm, caring, samajhdaar, aur genuinely helpful.
+
+PERSONALITY:
+- Hinglish mein baat kar — casual aur warm
+- Didi tone — empathetic, never judgmental
+- Girls ke specific concerns samjhti hai — safety, loneliness, pressure, relationships
+- Short replies (2-4 lines) — clear aur helpful
+
+[Same complete Class 11-12 syllabus knowledge as bhai — Physics, Chemistry, Maths, Biology full]
+
+PHYSICS: Mechanics, Thermodynamics, Electrostatics, Current Electricity, Magnetism, Optics, Modern Physics — sab kuch
+
+CHEMISTRY: Physical, Inorganic, Organic — complete
+
+MATHEMATICS: Algebra, Trigonometry, Coordinate Geometry, Calculus, Vectors, Probability — complete
+
+BIOLOGY: Cell, Genetics, Plant physiology, Human physiology, Ecology, Evolution — complete NEET syllabus
+
+RULES:
+- Academic doubts mein exact concept + formula + example do
+- Mental health mein pehle validate, phir suggest
+- Girls safety concerns ko seriously lo
+- Har reply ke baad ek caring follow-up question
+
+Har reply mein ek follow-up question poochh.`
+};
+
+async function callClaudeAPI(userMessage) {
+  // Add to history
+  chatHistory.push({ role: 'user', content: userMessage });
+
+  // Keep last 10 messages only (API cost control)
+  const recentHistory = chatHistory.slice(-10);
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': CLAUDE_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 300,
+        system: SYSTEM_PROMPTS[tone],
+        messages: recentHistory
+      })
+    });
+
+    if (!response.ok) {
+      const err = await response.json();
+      console.error('API Error:', err);
+      return tone === 'bhai'
+        ? 'Yaar thoda net problem hai abhi. Ek minute baad try karo! 😅'
+        : 'Thodi si problem aa gayi. Ek minute baad try karo! 😊';
+    }
+
+    const data = await response.json();
+    const reply = data.content[0].text;
+
+    // Add AI reply to history
+    chatHistory.push({ role: 'assistant', content: reply });
+
+    return reply;
+  } catch (e) {
+    console.error('Fetch error:', e);
+    return tone === 'bhai'
+      ? 'Yaar internet check karo ek baar! Main hoon yahan — wapas try karo 😊'
+      : 'Net thoda slow lag raha hai. Wapas try karo! 💙';
+  }
+}
+
+// ======= CHAT FUNCTIONS =======
+function setTone(t) {
+  tone = t;
+  chatHistory = []; // Reset history on tone change
+  document.getElementById('btnBhai').classList.toggle('active', t === 'bhai');
+  document.getElementById('btnDidi').classList.toggle('active', t === 'didi');
+  const msgs = document.getElementById('chatMsgs');
+  const typing = document.getElementById('typing');
+  msgs.innerHTML = ''; msgs.appendChild(typing);
+  addAIMsg(t === 'bhai'
+    ? 'Arre bhai! Kya chal raha hai? Padhai ka doubt ho, life ka tension ho — sab bata. Main hoon! 😊'
+    : 'Haan, aa gayi! Yahan safe space hai. Padhai ki problem ho ya kuch aur — freely bolo. 💙');
+  typing.style.display = 'none';
+}
+
+function addAIMsg(text) {
+  const msgs = document.getElementById('chatMsgs');
+  const d = document.createElement('div');
+  d.className = 'msg msg-ai';
+  // Render newlines properly
+  d.innerHTML = text.replace(/\n/g, '<br/>');
+  msgs.insertBefore(d, document.getElementById('typing'));
+  msgs.scrollTop = 9999;
+}
+
+function addUserMsg(text) {
+  const msgs = document.getElementById('chatMsgs');
+  const d = document.createElement('div');
+  d.className = 'msg msg-user';
+  d.textContent = text;
+  msgs.insertBefore(d, document.getElementById('typing'));
+  msgs.scrollTop = 9999;
+}
+
+async function sendMsg(text) {
+  const inp = document.getElementById('chatInp');
+  const msg = text || inp.value.trim();
+  if (!msg || awaitingReply) return;
+  inp.value = '';
+  addUserMsg(msg);
+  awaitingReply = true;
+  const typing = document.getElementById('typing');
+  typing.style.display = 'block';
+  document.getElementById('chatMsgs').scrollTop = 9999;
+
+  const reply = await callClaudeAPI(msg);
+  typing.style.display = 'none';
+  addAIMsg(reply);
+  awaitingReply = false;
+}
+// ======= LOGIN =======
+function showLogin(){
+  document.getElementById('landing').style.display='none';
+  document.getElementById('loginScreen').style.display='flex';
+}
+
+function fakeGoogle(){
+  document.getElementById('lName').value='Rahul Kumar';
+  document.getElementById('lGender').value='male';
+  alert('Google account connected! ✓');
+}
+
+function doLogin(){
+  const name=document.getElementById('lName').value.trim();
+  const gender=document.getElementById('lGender').value;
+  if(!name){alert('Naam likhna zaroori hai!');return;}
+  if(!gender){alert('Gender select karo');return;}
+  const ref=document.getElementById('lRef').value.trim();
+  user={name,gender,ref,days:Math.floor(Math.random()*200)+1,mood:'😊'};
+  user.refCode='KOTA-'+Math.random().toString(36).substr(2,4).toUpperCase();
+  if(ref)alert('Referral "'+ref+'" noted! Jab wo Pro len tab tera bonus activate hoga. 🎁');
+  applyUser();
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('appShell').style.display='block';
+  renderAll();
+}
+
+function applyUser(){
+  const n=user.name.split(' ')[0];
+  document.getElementById('navName').textContent=n;
+  document.getElementById('navAvi').textContent=user.name[0].toUpperCase();
+  document.getElementById('heroGreet').textContent='Namaste, '+n+' 👋';
+  document.getElementById('sDays').textContent=user.days;
+  document.getElementById('parLbl').textContent='Parent View — '+user.name;
+  document.getElementById('childMsg').textContent=n+' safe hai — abhi online';
+  document.getElementById('pDays').textContent=user.days;
+  document.getElementById('refCode').textContent=user.refCode;
+  if(user.gender==='female'){
+    document.getElementById('girlsBanner').style.display='block';
+    tone='didi';
+    document.getElementById('btnDidi').classList.add('active');
+    document.getElementById('btnBhai').classList.remove('active');
+    document.getElementById('firstMsg').textContent='Haan, aa gayi! Yahan safe space hai. Jo bhi feel ho, bata sakti ho. Koi judgment nahi. 💙';
+    // Add safety to bottom nav
+    document.getElementById('bn-notes').innerHTML='<i class="ti ti-shield"></i><span>Safety</span>';
+    document.getElementById('bn-notes').setAttribute('onclick','agoto("safety")');
+    document.getElementById('bn-notes').id='bn-safety';
+  }
+}
+
+// ======= NAV =======
+function agoto(id){
+  document.querySelectorAll('.apage').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.bn').forEach(b=>b.classList.remove('active'));
+  const page=document.getElementById('ap-'+id);
+  if(page)page.classList.add('active');
+  const bn=document.getElementById('bn-'+id);
+  if(bn)bn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ======= MOOD =======
+function setMood(m){
+  user.mood=m.split(' ')[0];
+  document.getElementById('moodDisp').textContent=m;
+  document.getElementById('pMood').textContent=m.split(' ')[0];
+  alert('Mood "'+m+'" save ho gaya — parents ko update bhej diya! 💙');
+}
+
+// ======= CHAT =======
+function setTone(t){
+  tone=t;
+  document.getElementById('btnBhai').classList.toggle('active',t==='bhai');
+  document.getElementById('btnDidi').classList.toggle('active',t==='didi');
+  const msgs=document.getElementById('chatMsgs');
+  const typing=document.getElementById('typing');
+  msgs.innerHTML='';msgs.appendChild(typing);
+  addAIMsg(t==='bhai'?'Arre bhai! Kya chal raha hai? Bata de.':'Haan, aao. Safe space hai yahan. 💙');
+  typing.style.display='none';
+}
+function addAIMsg(text){
+  const msgs=document.getElementById('chatMsgs');
+  const d=document.createElement('div');d.className='msg msg-ai';d.textContent=text;
+  msgs.insertBefore(d,document.getElementById('typing'));msgs.scrollTop=9999;
+}
+function addUserMsg(text){
+  const msgs=document.getElementById('chatMsgs');
+  const d=document.createElement('div');d.className='msg msg-user';d.textContent=text;
+  msgs.insertBefore(d,document.getElementById('typing'));msgs.scrollTop=9999;
+}
+function getReply(text){
+  const t=text.toLowerCase(),r=aiReplies[tone];
+  if(t.includes('exam')||t.includes('pressure')||t.includes('marks'))return r.exam[Math.floor(Math.random()*r.exam.length)];
+  if(t.includes('ghar')||t.includes('maa')||t.includes('papa')||t.includes('yaad'))return r.ghar[Math.floor(Math.random()*r.ghar.length)];
+  if(t.includes('paisa')||t.includes('fees')||t.includes('paise'))return r.paisa[0];
+  if(t.includes('akela')||t.includes('dost')||t.includes('lonely'))return r.akela[0];
+  if(t.includes('padhai')||t.includes('physics')||t.includes('chem')||t.includes('samajh'))return r.padhai[0];
+  return r.default[Math.floor(Math.random()*r.default.length)];
+}
+function sendMsg(text){
+  const inp=document.getElementById('chatInp');
+  const msg=text||inp.value.trim();
+  if(!msg||awaitingReply)return;
+  inp.value='';addUserMsg(msg);awaitingReply=true;
+  const typing=document.getElementById('typing');
+  typing.style.display='block';document.getElementById('chatMsgs').scrollTop=9999;
+  setTimeout(()=>{typing.style.display='none';addAIMsg(getReply(msg));awaitingReply=false;},1000+Math.random()*800);
+}
+
+// ======= PARENTS =======
+function sendToParent(){
+  const m=document.getElementById('parMsg').value.trim();
+  if(!m){alert('Kuch likho pehle!');return;}
+  alert('Message parents ko bheja:\n"'+m+'"');document.getElementById('parMsg').value='';
+}
+
+// ======= TIFFIN =======
+function renderTif(list){
+  document.getElementById('tifList').innerHTML=list.length===0
+    ?'<div style="text-align:center;padding:2rem;color:var(--app-muted);font-size:13px">Koi tiffin nahi mili</div>'
+    :list.map(t=>`<div class="tif-card"><div class="tif-img">${t.emoji}</div><div style="flex:1;min-width:0"><div class="tif-name">${t.name}</div><div class="tif-meta">${t.meta}</div><div style="display:flex;gap:6px;align-items:center;margin-top:3px"><span class="tif-price">₹${t.price}/meal</span><span style="font-size:10px;color:var(--app-muted)">★${t.rating}</span>${t.delivery?'<span class="abadge ab-green">Delivery</span>':''}</div></div><button class="tif-btn" onclick="alert('${t.name} — booking confirmed! 🍱')">Book</button></div>`).join('');
+}
+function filterTif(f,btn){
+  document.querySelectorAll('.tf').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+  let list=tiffins;
+  if(f==='veg')list=tiffins.filter(t=>t.type==='veg');
+  else if(f==='nonveg')list=tiffins.filter(t=>t.type==='nonveg');
+  else if(f==='cheap')list=tiffins.filter(t=>t.price<80);
+  else if(f==='delivery')list=tiffins.filter(t=>t.delivery);
+  renderTif(list);
+}
+
+// ======= MEDICAL =======
+function renderMedical(){
+  document.getElementById('emergencyNums').innerHTML=
+    [...emergencyNums,...coachingNums].map(n=>`<div class="hlp-card"><div class="hlp-icon">${n.icon}</div><div><div class="hlp-name">${n.name}</div><div class="hlp-num">${n.num}</div><div class="hlp-free" style="color:var(--app-muted)">${n.tag}</div></div><button class="hlp-call" onclick="alert('Calling: ${n.num}')">📞 Call</button></div>`).join('');
+  document.getElementById('docList').innerHTML=doctors.map(d=>`<div class="doc-card"><div class="doc-avi">${d.emoji}</div><div><div class="doc-name">${d.name}</div><div class="doc-spec">${d.spec}</div><div class="doc-meta">${d.dist} • ${d.avail} • ${d.fee}</div></div><button class="doc-btn" onclick="alert('${d.name} — appointment book ho raha hai...')">Book</button></div>`).join('');
+  document.getElementById('helplines').innerHTML=helplines.map(h=>`<div class="hlp-card"><div class="hlp-icon">${h.icon}</div><div><div class="hlp-name">${h.name}</div><div class="hlp-num">${h.num} • ${h.sub}</div><div class="hlp-free">${h.free}</div></div><button class="hlp-call" onclick="alert('Calling: ${h.num}')">📞 Call</button></div>`).join('');
+}
+
+// ======= GIRLS EMERGENCY =======
+function renderGirlsEmergency(){
+  const el=document.getElementById('girlsEmergency');
+  if(el)el.innerHTML=girlsEmergNums.map(n=>`<div class="hlp-card"><div class="hlp-icon">${n.icon}</div><div><div class="hlp-name">${n.name}</div><div class="hlp-num">${n.num}</div><div class="hlp-free" style="color:#ec4899">${n.free}</div></div><button class="hlp-call" style="background:#ec4899" onclick="alert('Calling: ${n.num}')">📞 Call</button></div>`).join('');
+}
+
+// ======= SUGGESTION BOX =======
+function setSugType(t,btn){
+  sugType=t;
+  document.querySelectorAll('.sug-type').forEach(b=>{if(b.parentElement.id==='sugTypes')b.classList.remove('active')});
+  btn.classList.add('active');
+}
+function setPri(p,btn){
+  sugPri=p;
+  ['pri-high','pri-med','pri-low'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('active')});
+  btn.classList.add('active');
+}
+function submitSug(){
+  const text=document.getElementById('sugText').value.trim();
+  if(!text){alert('Kuch toh likho!');return;}
+  const aiReplySug=generateSugReply(text,sugType);
+  const newItem={cat:sugType,text,status:'new',reply:aiReplySug,time:'Abhi abhi'};
+  sugPastData.unshift(newItem);
+  document.getElementById('sugText').value='';
+  renderSuggestions();
+  alert('✅ Suggestion submit ho gaya!\n\nAnonymously save hua — na tera naam, na gender.\n\nAI reply:\n"'+aiReplySug+'"');
+}
+function generateSugReply(text,type){
+  const replies={
+    'App Feature':['Bahut accha suggestion! Hum is par next update mein kaam karenge.','Noted! Is feature ki demand aur bhi logon ne ki hai — priority list mein hai.'],
+    'PG Problem':['Yeh important issue hai. PG owners se baat karenge is baare mein.','Noted! PG verification process mein yeh point add karenge.'],
+    'Safety Issue':['Yeh bahut important hai — immediately note kar liya. Safety team se discuss karenge.','Tumhari safety hamare liye pehli priority hai. Is par kaam hoga.'],
+    'Study Help':['Great suggestion! Notes team ko forward kar diya — next update mein dekho.','Noted! Study material team is par kaam kar rahi hai.'],
+    'Mental Health':['Bahut sensitive aur zaroori point. Counseling team se discuss karenge.','Tumhari baat sun li — yeh matter genuinely important hai.'],
+    'Other':['Suggestion note kar liya gaya. Team review karegi next cycle mein.'],
+  };
+  const arr=replies[type]||replies['Other'];
+  return arr[Math.floor(Math.random()*arr.length)];
+}
+function renderSuggestions(){
+  const el=document.getElementById('sugPast');
+  const head=el.querySelector('.asec-head');
+  el.innerHTML='';el.appendChild(head||Object.assign(document.createElement('div'),{className:'asec-head',style:'padding:0;margin-bottom:.75rem',textContent:'Previous suggestions — status'}));
+  sugPastData.forEach(s=>{
+    const statusClass=s.status==='done'?'ss-done':s.status==='progress'?'ss-progress':'ss-new';
+    const statusText=s.status==='done'?'✓ Done':s.status==='progress'?'⚡ In Progress':'🆕 New';
+    el.innerHTML+=`<div class="sug-item"><div class="sug-item-head"><span class="sug-cat">${s.cat}</span><span class="sug-status ${statusClass}">${statusText}</span></div><div class="sug-text">${s.text}</div><div class="sug-ai-reply">🤖 AI: ${s.reply}</div><div class="sug-time">⏰ ${s.time}</div></div>`;
+  });
+}
+
+// ======= NOTES =======
+function setSubject(sub,btn){
+  document.querySelectorAll('.ntab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderNotes(sub);
+}
+function renderNotes(sub){
+  const data=subjectData[sub];
+  const el=document.getElementById('notesContent');
+  const subIcon={physics:'⚛️',chemistry:'🧪',biology:'🧬',maths:'📐'};
+  el.innerHTML=`
+    <div style="background:linear-gradient(135deg,rgba(29,158,117,.08),rgba(29,158,117,.02));border:1px solid rgba(29,158,117,.2);border-radius:10px;padding:.75rem;margin-bottom:.75rem;font-size:12px;color:var(--app-text);line-height:1.5">
+      <strong>${subIcon[sub]} ${data.subject}</strong><br/>
+      <span style="color:var(--app-muted)">✓ ${data.free} chapters free • Baaki Pro plan mein • IIT-JEE + NEET + Advanced</span>
+    </div>`+
+  data.chapters.map(c=>{
+    const isFree=c.free;
+    return `<div class="ch-preview" id="ch-${sub}-${c.num.replace(' ','')}">
+      <div class="ch-prev-head">
+        <span class="ch-num-badge">${c.num}</span>
+        <span class="${isFree?'ch-free-tag':'abadge ab-or'}">${isFree?'✓ Free Preview':'🔒 Pro Only'}</span>
+      </div>
+      <div class="ch-name">${c.name}</div>
+      <div class="ch-desc">${c.desc}</div>
+      ${c.pyqs?`<div style="font-size:10px;color:var(--blue);background:rgba(24,95,165,.06);border-radius:6px;padding:4px 8px;margin:.4rem 0">📋 PYQ: ${c.pyqs}</div>`:''}
+      <div class="ch-topics">${c.topics.map(t=>`<span class="ch-topic">${t}</span>`).join('')}</div>
+      <div class="ch-footer">
+        <span class="ch-pages">📄 ${c.pages}</span>
+        <button class="${isFree?'ch-btn ch-btn-free':'ch-btn ch-btn-lock'}" onclick="showChapter('${sub}','${c.num.replace(/'/g,'').replace(' ','')}',${isFree})">${isFree?'Chapter dekho →':'🔒 Pro mein unlock'}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function showChapter(sub,num,isFree){
+  if(!isFree){alert('Yeh chapter Pro plan mein milega!\n\nFree mein pehle 3 chapters enjoy karo — content dekhke Pro lena decision karo 😊');return;}
+  const data=subjectData[sub];
+  const ch=data.chapters.find(c=>c.num.replace(' ','')===num||c.num.replace('Ch ','Ch')===num);
+  if(!ch)return;
+  if(!ch.detail){alert(ch.name+'\n\n'+ch.desc+'\n\nTopics: '+ch.topics.join(', ')+'\n\n[Detailed notes Pro plan mein]');return;}
+  // Show full chapter modal
+  let modal=document.getElementById('chapterModal');
+  if(!modal){
+    modal=document.createElement('div');modal.id='chapterModal';
+    modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;display:flex;align-items:flex-start;justify-content:center;padding:1rem;overflow-y:auto';
+    document.body.appendChild(modal);
+  }
+  modal.innerHTML=`<div style="background:#fff;border-radius:16px;padding:1.25rem;width:100%;max-width:480px;margin-top:2rem">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem">
+      <div style="font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;color:var(--app-text)">${ch.num}: ${ch.name}</div>
+      <button onclick="document.getElementById('chapterModal').remove()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--app-muted)">✕</button>
+    </div>
+    <div style="background:#f8f4f0;border-radius:10px;padding:.9rem;font-size:12px;color:var(--app-text);white-space:pre-line;line-height:1.7;font-family:monospace;max-height:60vh;overflow-y:auto">${ch.detail}</div>
+    ${ch.pyqs?`<div style="margin-top:.75rem;padding:.6rem;background:rgba(24,95,165,.06);border-radius:8px;font-size:11px;color:var(--blue)">📋 Previous Year Questions:<br/>${ch.pyqs}</div>`:''}
+    <div style="display:flex;gap:8px;margin-top:.75rem">
+      <button onclick="document.getElementById('chapterModal').remove()" style="flex:1;padding:.7rem;background:var(--or);color:#fff;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer">Samajh gaya! ✓</button>
+    </div>
+  </div>`;
+  modal.style.display='flex';
+}
+
+// ======= SOS =======
+function showSOS(){document.getElementById('sosModal').classList.add('open')}
+function triggerSOS(){
+  document.getElementById('sosModal').classList.remove('open');
+  alert('🚨 SOS Alert bheja gaya!\nParents aur emergency contacts notify ho gaye.\nAmbulance dispatch ho rahi hai.\n\nHimmat rakho — help aa rahi hai!');
+}
+
+// ======= REFERRAL =======
+function copyRef(){
+  const code=user.refCode||'KOTA-XXXX';
+  navigator.clipboard.writeText(code).then(()=>alert('Code copy ho gaya: '+code+'\nDosto ko share karo!')).catch(()=>alert('Code: '+code));
+}
+
+// ======= SAFETY =======
+function fakeCall(){
+  alert('10 second mein call aayegi! 📞 Ready raho.');
+  setTimeout(()=>document.getElementById('fakeCallModal').classList.add('open'),10000);
+}
+
+// ======= ADMIN PANEL =======
+const ADMIN_PASS='tarun@kotanest2025';
+let isAdmin=false;
+const adminData={
+  users:[
+    {name:'Rahul K.',gender:'male',joined:'2 days ago',plan:'Free',mood:'😊',city:'Kota'},
+    {name:'Priya S.',gender:'female',joined:'5 days ago',plan:'Pro',mood:'😐',city:'Kota'},
+    {name:'Amit J.',gender:'male',joined:'1 week ago',plan:'Free',mood:'😊',city:'Kota'},
+    {name:'Sneha R.',gender:'female',joined:'3 days ago',plan:'Free',mood:'😔',city:'Kota'},
+  ],
+  stats:{totalUsers:4,proUsers:1,freeUsers:3,todayActive:3,suggestions:3,sosToday:0},
+};
+
+function openAdmin(){
+  const pass=prompt('Admin password:');
+  if(pass===ADMIN_PASS){isAdmin=true;showAdminPanel();}
+  else if(pass!==null)alert('Wrong password!');
+}
+
+function showAdminPanel(){
+  let panel=document.getElementById('adminPanel');
+  if(panel){panel.style.display='flex';return;}
+  panel=document.createElement('div');panel.id='adminPanel';
+  panel.style.cssText='position:fixed;inset:0;background:#0D0D0B;z-index:500;display:flex;flex-direction:column;overflow-y:auto;color:#F5F4F0;font-family:DM Sans,sans-serif';
+  const d=adminData;
+  panel.innerHTML=`
+    <div style="background:#161614;padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;z-index:10">
+      <div style="font-family:Syne,sans-serif;font-size:1rem;font-weight:800;color:#D85A30">KotaNest Admin 🔐</div>
+      <button onclick="document.getElementById('adminPanel').style.display='none'" style="background:rgba(255,255,255,.1);border:none;color:#fff;padding:6px 14px;border-radius:8px;cursor:pointer;font-size:12px">✕ Close</button>
+    </div>
+    <div style="padding:1rem">
+      <!-- Stats -->
+      <div style="font-family:Syne,sans-serif;font-size:.8rem;font-weight:700;color:#888780;margin-bottom:.75rem;letter-spacing:.08em">OVERVIEW</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.25rem">
+        ${[
+          {label:'Total Users',val:d.stats.totalUsers,c:'#D85A30'},
+          {label:'Pro Users',val:d.stats.proUsers,c:'#1D9E75'},
+          {label:'Today Active',val:d.stats.todayActive,c:'#185FA5'},
+          {label:'Free Users',val:d.stats.freeUsers,c:'#888780'},
+          {label:'Suggestions',val:d.stats.suggestions,c:'#BA7517'},
+          {label:'SOS Today',val:d.stats.sosToday,c:'#DC2626'},
+        ].map(s=>`<div style="background:#1E1E1B;border-radius:10px;padding:.75rem;text-align:center"><div style="font-family:Syne,sans-serif;font-size:1.4rem;font-weight:800;color:${s.c}">${s.val}</div><div style="font-size:10px;color:#888780;margin-top:2px">${s.label}</div></div>`).join('')}
+      </div>
+
+      <!-- Suggestions (Anonymous - no name/gender shown) -->
+      <div style="font-family:Syne,sans-serif;font-size:.8rem;font-weight:700;color:#888780;margin-bottom:.75rem;letter-spacing:.08em">SUGGESTIONS (ANONYMOUS)</div>
+      <div style="background:#1E1E1B;border-radius:12px;overflow:hidden;margin-bottom:1.25rem">
+        ${adminData.suggestions||sugPastData.map((s,i)=>`
+          <div style="padding:.9rem 1rem;border-bottom:1px solid rgba(255,255,255,.06)">
+            <div style="display:flex;gap:8px;margin-bottom:.3rem">
+              <span style="background:rgba(216,90,48,.15);color:#D85A30;font-size:10px;padding:2px 8px;border-radius:20px">${s.cat}</span>
+              <span style="font-size:10px;color:#888780">Anonymous • ${s.time}</span>
+            </div>
+            <div style="font-size:13px;color:#F5F4F0;margin-bottom:.4rem">${s.text}</div>
+            <div style="display:flex;gap:8px">
+              <button onclick="updateSugStatus(${i},'done')" style="font-size:10px;background:#16A34A;color:#fff;border:none;border-radius:6px;padding:3px 10px;cursor:pointer">✓ Done</button>
+              <button onclick="updateSugStatus(${i},'progress')" style="font-size:10px;background:#185FA5;color:#fff;border:none;border-radius:6px;padding:3px 10px;cursor:pointer">⚡ Progress</button>
+            </div>
+          </div>`).join('')}
+      </div>
+
+      <!-- Users (gender shown but no chat content) -->
+      <div style="font-family:Syne,sans-serif;font-size:.8rem;font-weight:700;color:#888780;margin-bottom:.75rem;letter-spacing:.08em">REGISTERED USERS (No chat data shown)</div>
+      <div style="background:#1E1E1B;border-radius:12px;overflow:hidden;margin-bottom:1.25rem">
+        ${d.users.map(u=>`
+          <div style="padding:.9rem 1rem;border-bottom:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-size:13px;font-weight:500">${u.name} ${u.mood}</div>
+              <div style="font-size:10px;color:#888780">${u.gender==='female'?'👧 Girl':'👦 Boy'} • Joined ${u.joined} • ${u.city}</div>
+            </div>
+            <span style="font-size:10px;padding:2px 10px;border-radius:20px;background:${u.plan==='Pro'?'rgba(29,158,117,.15)':'rgba(255,255,255,.06)'};color:${u.plan==='Pro'?'#1D9E75':'#888780'}">${u.plan}</span>
+          </div>`).join('')}
+      </div>
+
+      <!-- Update Section -->
+      <div style="font-family:Syne,sans-serif;font-size:.8rem;font-weight:700;color:#888780;margin-bottom:.75rem;letter-spacing:.08em">PUSH NOTICE TO STUDENTS</div>
+      <div style="background:#1E1E1B;border-radius:12px;padding:1rem">
+        <textarea id="adminNotice" style="width:100%;background:#161614;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.6rem;color:#F5F4F0;font-family:DM Sans,sans-serif;font-size:13px;resize:none;outline:none" rows="2" placeholder="Notice board pe message bhejo..."></textarea>
+        <button onclick="pushNotice()" style="width:100%;margin-top:8px;background:#D85A30;color:#fff;border:none;border-radius:8px;padding:.65rem;font-family:Syne,sans-serif;font-size:.85rem;font-weight:700;cursor:pointer">Notice Push karo ↗</button>
+      </div>
+
+      <div style="margin-top:1rem;padding:.75rem;background:rgba(220,38,38,.08);border-radius:10px;font-size:11px;color:#DC2626;line-height:1.6">
+        🔒 <strong>Privacy:</strong> Chat content kisi ko nahi dikhta. Suggestions anonymous hain. Sirf registration data aur mood visible hai.
+      </div>
+    </div>`;
+  document.body.appendChild(panel);
+}
+
+function updateSugStatus(i,status){
+  if(sugPastData[i]){sugPastData[i].status=status;alert('Status updated to: '+status);}
+}
+function pushNotice(){
+  const msg=document.getElementById('adminNotice').value.trim();
+  if(!msg)return;
+  // Update notice board
+  const nb=document.querySelector('#ap-home .notice-item');
+  if(nb)nb.innerHTML=`<span class="abadge ab-or">Admin</span><span>${msg}</span>`;
+  alert('Notice push ho gaya students ko! ✓');
+  document.getElementById('adminNotice').value='';
+}
+
+// ======= RENDER ALL =======
+function renderAll(){
+  renderTif(tiffins);
+  renderMedical();
+  renderGirlsEmergency();
+  renderSuggestions();
+  renderNotes('physics');
+}
+
+// Landing scroll animations
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}})},{threshold:0.1});
+document.querySelectorAll('.feat-card,.prob-card,.price-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(24px)';el.style.transition='opacity 0.5s ease,transform 0.5s ease';obs.observe(el);});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}})});
+
+// Admin shortcut — triple tap on logo
+let tapCount=0;
+document.querySelector('.app-logo')&&document.querySelector('.app-logo').addEventListener('click',()=>{tapCount++;if(tapCount>=3){tapCount=0;openAdmin();}setTimeout(()=>tapCount=0,1000);});
+
 </script>
 </body>
 </html>
